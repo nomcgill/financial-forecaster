@@ -6,7 +6,7 @@ deploy:
   provider: heroku
   api_key:
     secure: i+Ps2DDZwNMujCwfJP5wQ01b0Ac+HY5jt1Q8tnTwrtXsb3a6Kb79kFqWiSoPZ9cKf9NHPXrDWc8TwGAcjTxEMTo/U+mIlNjJcvXirL9npOGlomwr59GF+zMAtDGUM+napUW9C5OO+C4kak9euJ9yfibCZOO5stNc2YaDRh1jWRN1YUAieAfjq1kLsQVeUmcyCS/q0DCwkUHhxyKe1Hw2fDqq/sCS7/5m8O4cavXb1Ptj6+90k/5TruAKloTzuo54SZAd2CrSOqA6KMb8iZ6OuBH1kW+If9dRRrY56F8fkoZvBClvQGVTxv6VSuIkbobeUlFejvNrPi8XZch5l+7YgKjqvlzl0Epozr8NX50emTb35PTDL7Kk1wnPiFhNO+TAnzNfzmub8hzDPff77Oz50zmv9p71L5cufxnTzAtmjATxKISOZQ3M/RsLMQB7rbg6pWVMHxjkVjjuRQrpXywkW7bCss8mxhyRYwHL2JcTZQlXb6wtfH+a1WAbC4dUjRxVALN1Reg2z4TgCg3A/0+pUxsmvSiVRQ5vxlu8dc+387vmwvzShDTdl9I7l5nM4XzncoNhxeGu1CxHlAgReFsckYjV+59j+Sfr8NHypWwauEKZ2njasEUibPd9xQOAwhNDp20fZk+O0PRK1+V7OQjHU9u7/9uJ4ZwhLvLJRFKnMjw=
-  app: financial-forecaster
+  app: obscure-beyond-32722
   on:
     repo: nomcgill/financial-forecaster
     branch: master
