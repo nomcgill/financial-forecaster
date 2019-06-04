@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: zF5hHlTbd2Ccb30QvRa14LFp0SM2qGWFjyYDoXA8HDq50jVrHx6OUcEp95FZJ5isFsl/nN+vUMFlj1RQ36LsKcpNNhZPUsd528FwRRiTFOqtdaVj+hFKPUUDh+FN5NXrUpRVWc4AbqVIS6Xn1WIkDQfIljWY6iSSEd4UVoH57iDp0PGaLbNvjw+9loyJk2mnmlML2HqXnlSI8smSLB+UCqdtdhPEG+/fACApJg7MitRgIGgBlysEnVvMnf9xsO1xB/+07od/+Sy63uGebejiGpEuRT4u+9d2+eJxglXWbrSoTiUAIag2VaBEfLtRpwHPvR3XKIbBEWO/iUXkd0Qg+fYwTAVhD6c2NTUYqOwnpUtjCqua6qVbhagRFwaNVJAjP2fnZEofVLQMYTsE3dvyNUXexDFuuEAUZcdUwQrexqoZaBTtTdCIWlIqjhqrAqM9X/6fSP3Ch9y1EuaU6bcMqD+Bjqn383Vo1NWr5G8nZz9BzvcassHfDXPpKL7ktbrARCGbPEH+bdl7uURDda2gmXLazrfwMVzv8yehV6DAkGH7PJUf3pboZUksHT1XHJxk22olOQjcMtPGi1PG2fXN506NnwNn2IG2exFK+bSOXzxNcmfcwqQoQt4BiKmEONMoWS+S7z8QMPsk49mP+4TW/NdX2AuY/3bG20w/mUl0a1A=
+  app:  obscure-beyond-32722
+  on:
+    repo: nomcgill/financial-forecaster
