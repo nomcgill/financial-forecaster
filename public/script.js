@@ -1,90 +1,152 @@
 "use strict";
 
-console.log("Page is loading...")
+// import { link } from "fs";
 
-let loans = [
+let exampleLoans = [
     {
         name: "Chase CC",
         balance: 6000,
-        rate: 22,
-        payment: 200,
-        compound: true
+        rate: 22.75,
+        payment: 200
     },
     {
         name: "Bank of America CC",
         balance: 4000,
         rate: 15.5,
-        payment: 300,
-        compound: true
+        payment: 2000    
     },
     {
         name: "Mortgage",
         balance: 210000,
         rate: 5,
-        payment: 1700,
-        compound: false
+        payment: 1700    
     },
     {
         name: "Mazda",
-        balance: 180000,
+        balance: 15000,
         rate: 3.25,
-        payment: 325,
-        compound: false
+        payment: 400    
     },
     {
         name: "Student Loan",
         balance: 18000,
         rate: 4.25,
-        payment: 310,
-        compound: true
+        payment: 310    
+    },
+    {
+        name: "Child Support",
+        balance: 6000,
+        rate: 30,
+        payment: 500    
+    },
+    {
+        name: "HELOC",
+        balance: 40000,
+        rate: 4.25,
+        payment: 600  
     }
 ]
 
-// loans.forEach(function(statistic){
-//     console.log(statistic.name);
-//     console.log(statistic.balance);
-//     console.log(balance)
-// });
+// var ul = document.getElementById("list");
+// var li = document.createElement("li");
+// li.appendChild(document.createTextNode("Four"));
+// li.setAttribute("id", "element4"); // added line
+// ul.appendChild(li);
 
-// function getSum(total, num) {
-//     return total + num;
-//   }
 
-//   var totalDebt = function totalDebt(loans){
-//     var combinedBalances = []
-//     loans.forEach(function(statistic){
-//         combinedBalances.push(statistic.balance)
-//     })
-//     console.log(combinedBalances)
-//     var total = combinedBalances.reduce(getSum)
-//     console.log("Total Debt: " + total)
-//     return total
-// }
-// console.log(loans.length)
-// totalDebt(loans)
-
-console.log(loans[0])
-
-function calculateCompoundInt(loans){
-    var card = loans[0]
-    let newBalance = card.balance
-    console.log("Starting Balance: " + newBalance)
-    let payments = 0
-    while (newBalance > 0){
-        console.log(newBalance)
-        newBalance = newBalance * card.rate / 1200 + newBalance - card.payment;        
-        payments = payments + 1
-        console.log(payments)
-        }
-    // do {nextMonthBal(newMonthBal)}
-    // while (newMonthBal > 0)
-    // nextMonthBal(newBalance)
-    // // var nextMonthBal = card.balance * card.rate / 1200 + card.balance - card.payment
-    // for (let i = 0; nextMonthBal > 0; i++){
-    //     []
-    //     let nextMonthBal = card.balance * card.rate / 1200 + card.balance - card.payment;
-    //     consolog.log(nextMonthBal)}
-    // console.log(nextMonthBal)
+function gatherInfo(loans){
+    createCards(loans)
+    addEmUp(loans)
 }
 
-calculateCompoundInt(loans)
+function roundCents(input){
+    return Math.round(100 *(input))/100;
+}
+
+function getSum(total, num) {
+    return total + num;
+}
+
+function createCards(loans){
+    loans.forEach((loan) => {
+    console.log("Loan heard: " + loan.name)
+    var grid = document.getElementById("grid")
+    var newCard = document.createElement("div")
+    var children = grid.children.length + 1
+    newCard.setAttribute("id", "area" + children)
+    newCard.appendChild(document.createTextNode(`${loan.name}`))
+    grid.appendChild(newCard)
+    })
+}
+
+function calculateSimpleInt(card){
+    // console.log("calculateSimpleInt is run")
+    let count = 0
+    let balanceTracker = [card.balance]
+    let payments = []
+    let lastKnownBalance = card.balance
+    do {
+        count = count + 1
+        if (lastKnownBalance > 9999999){
+            var paid = roundCents(payments.reduce(getSum))
+            var results = ["$" + paid + " paid on " + card.name, "Stopped counting after " + ((count + 1)/12) + " years because balance reached over $1,000,000."]
+            console.log(results)
+            return [results]
+        }
+        if (count > 1999){
+            var paid = roundCents(payments.reduce(getSum))
+            console.log("A lifetime of debt.")
+            var results = ["$" + paid + " paid", "Stopped counting after " + (count + 1) + " months."]
+            console.log(results)
+            return [results]
+        }      
+        lastKnownBalance = balanceTracker[balanceTracker.length -1]
+        if (card.payment < lastKnownBalance){
+            lastKnownBalance = lastKnownBalance * card.rate / 1200 + lastKnownBalance - card.payment;
+            balanceTracker.push(lastKnownBalance);
+            payments.push(card.payment)
+        }
+        if (card.payment >= lastKnownBalance){
+            payments.push(lastKnownBalance)
+            var paid = roundCents(payments.reduce(getSum))
+            var results = [paid, count + 1]
+            return results
+        }
+    }
+    while (balanceTracker[balanceTracker.length - 1] > 0)
+}
+
+function addEmUp(loans){
+    console.log("addEmUp is run")
+    var totals = []
+    for (let i=0; i < loans.length; i++){
+        var card = loans[i]
+        console.log(card.name + ":")
+        if (isNaN(calculateSimpleInt(card)[0])){
+            console.log(card.name + " excluded for unreasonable nature.")
+        }
+        else {            
+            var cardPaid = calculateSimpleInt(card)[0]
+            console.log("cardPaid: " + cardPaid)
+            totals.push(cardPaid)
+        }
+    }
+    console.log(totals)
+    var totalPaid = roundCents(totals.reduce(getSum))
+    console.log("$" + totalPaid + ": totalPaid")
+    return totalPaid
+}
+
+// function watchForm() {
+//     $('form').submit(event => {
+//       event.preventDefault();
+//        var ratingInput = document.getElementById("challenge-rating").value
+//        checkMonsterList(ratingInput)
+//        });
+//   }
+  
+$(function() {
+    console.log('App loaded! Waiting for submit!');
+    gatherInfo(loans)
+    // watchForm();
+});

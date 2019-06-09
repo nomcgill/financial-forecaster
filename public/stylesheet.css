@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header, h1, h3, #results {
+    text-align: center;
+
+}
+
+body {
+    font-family: 'Roboto Slab', serif;
+    margin: 20px;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 100px);
+  }
+  
+.boxes {
+    /* height: 40px; */
+}
+
+  #area1 {
+    background-color: lime;
+    padding: 11px;
+    margin: 11px;
+  }
+  
+  #area2 {
+    background-color: yellow;
+    padding: 11px;
+    margin: 11px;
+  }
+
+  #area3 {
+    background-color: darkcyan;
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area4 {
+    background-color: lightcoral;
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area5 {
+    background-color: lightgray;
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area6 {
+    background-color: rgb(255, 255, 170);
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area7 {
+    background-color: rgb(255, 164, 45);
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area8 {
+    background-color: lightskyblue;
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area9 {
+    background-color: rgb(63, 175, 63);
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+  #area10 {
+    background-color: rgb(250, 135, 189);
+    padding: 11px;
+    margin: 11px;
+    height: 78px;
+  }
+
+
+/* mobile */
+@media only screen and (min-width: 768px) {
+    header, h1, h3 {
+        text-align: left;
+    }
+
+    #grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(1, 100px);
+      }
+}
