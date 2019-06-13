@@ -2,65 +2,31 @@
 
 // import { link } from "fs";
 
-let exampleLoans = [
-    {
-        name: "Chase CC",
-        balance: 6000,
-        rate: 22.75,
-        payment: 200
-    },
-    {
-        name: "Bank of America CC",
-        balance: 4000,
-        rate: 15.5,
-        payment: 2000    
-    },
-    {
-        name: "Mortgage",
-        balance: 210000,
-        rate: 5,
-        payment: 1700    
-    },
-    {
-        name: "Mazda",
-        balance: 15000,
-        rate: 3.25,
-        payment: 400    
-    },
-    {
-        name: "Student Loan",
-        balance: 18000,
-        rate: 4.25,
-        payment: 310    
-    },
-    {
-        name: "Child Support",
-        balance: 6000,
-        rate: 30,
-        payment: 500    
-    },
-    {
-        name: "HELOC",
-        balance: 40000,
-        rate: 4.25,
-        payment: 600  
-    }
-]
+var loans = []
 
-// var ul = document.getElementById("list");
-// var li = document.createElement("li");
-// li.appendChild(document.createTextNode("Four"));
-// li.setAttribute("id", "element4"); // added line
-// ul.appendChild(li);
+// $(document).ready(function(loans) {
 
+// });
 
 function gatherInfo(loans){
-    createCards(loans)
-    addEmUp(loans)
+    // if (loans.length > 0){
+        createCards(loans)
+        createAddCardBox()
+        addEmUp(loans)
+    // }
+    // else {
+        // createAddCardBox()
+    // }
 }
 
 function roundCents(input){
     return Math.round(100 *(input))/100;
+}
+
+function formatNumber(num){
+    var num_parts = num.toString().split(".");
+    num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num_parts.join(".");
 }
 
 function getSum(total, num) {
@@ -69,31 +35,53 @@ function getSum(total, num) {
 
 function createCards(loans){
     loans.forEach((loan) => {
-    console.log("Loan heard: " + loan.name)
-    var grid = document.getElementById("grid")
-    var newCard = document.createElement("div")
-    var children = grid.children.length + 1
-    newCard.setAttribute("id", "area" + children)
-    newCard.appendChild(document.createTextNode(`${loan.name}`))
-    grid.appendChild(newCard)
+        // console.log("Loan heard: " + loan.name)
+        var grid = document.getElementById("grid")
+        var newCard = document.createElement("div")
+        var children = grid.children.length + 1
+        newCard.setAttribute("id", "area" + children)
+        newCard.setAttribute("class", "boxes")
+        newCard.appendChild(document.createTextNode(`${loan.name}`))
+        newCard.appendChild(document.createTextNode(`Payment: ${loan.payment}`))
+        grid.appendChild(newCard)
+        // document.getElementById(`area${children}`).addEventListener("click", onAddHurdleClick);
     })
 }
 
+// var grid2 = document.getElementById("results")
+// var eachResult = document.createElement("div")
+// var children = grid2.children.length + 1
+// oneResult.setAttribute("id", "oneResult" + children)
+// oneResult.setAttribute("class", "footResults")
+// oneResult.appendChild(document.createTextNode(`Hello! Number`))
+// grid2.appendChild(oneResult)
+
+function createAddCardBox(){
+    var grid = document.getElementById("grid")
+    var newCard = document.createElement("div")
+    newCard.setAttribute("id", "defaultBox")
+    newCard.setAttribute("class", "boxes")
+    newCard.appendChild(document.createTextNode(`Add a New Hurdle...`))
+    grid.appendChild(newCard)
+    document.getElementById("defaultBox").addEventListener("click", onAddHurdleClick);
+}
+
 function calculateSimpleInt(card){
-    // console.log("calculateSimpleInt is run")
+    console.log([card])
     let count = 0
     let balanceTracker = [card.balance]
     let payments = []
     let lastKnownBalance = card.balance
     do {
-        count = count + 1
         if (lastKnownBalance > 9999999){
+            count = count + 1
             var paid = roundCents(payments.reduce(getSum))
             var results = ["$" + paid + " paid on " + card.name, "Stopped counting after " + ((count + 1)/12) + " years because balance reached over $1,000,000."]
             console.log(results)
             return [results]
         }
         if (count > 1999){
+            count = count + 1
             var paid = roundCents(payments.reduce(getSum))
             console.log("A lifetime of debt.")
             var results = ["$" + paid + " paid", "Stopped counting after " + (count + 1) + " months."]
@@ -102,39 +90,91 @@ function calculateSimpleInt(card){
         }      
         lastKnownBalance = balanceTracker[balanceTracker.length -1]
         if (card.payment < lastKnownBalance){
+            console.log("Payment made of " + card.payment)
             lastKnownBalance = lastKnownBalance * card.rate / 1200 + lastKnownBalance - card.payment;
             balanceTracker.push(lastKnownBalance);
             payments.push(card.payment)
+            count = count + 1
         }
         if (card.payment >= lastKnownBalance){
             payments.push(lastKnownBalance)
             var paid = roundCents(payments.reduce(getSum))
-            var results = [paid, count + 1]
+            var results = {
+                paid: paid, 
+                count : count + 1,
+                lastKnownBalance : lastKnownBalance
+            }
+            console.log(results.count + " : count")
+            // console.log("Made it to the end! Results: " + card.name + ": " + results.paid + " in " + count + " months.")
             return results
         }
     }
     while (balanceTracker[balanceTracker.length - 1] > 0)
 }
 
+function findInterestPaid(card){
+    var result = roundCents(calculateSimpleInt(card).paid - card.balance)
+    console.log("findIntPaid: " + card.name + ": " + result)
+    return result
+}
+
 function addEmUp(loans){
     console.log("addEmUp is run")
+    var monthlyPay = []
+    var cardStartingBalance = []
     var totals = []
-    for (let i=0; i < loans.length; i++){
-        var card = loans[i]
-        console.log(card.name + ":")
-        if (isNaN(calculateSimpleInt(card)[0])){
-            console.log(card.name + " excluded for unreasonable nature.")
+    if (loans.length > 0 ){
+        for (let i=0; i < loans.length; i++){
+            var card = loans[i]
+            console.log(card.name + ":")
+            var cardPaid = calculateSimpleInt(card)
+            console.log(cardPaid.paid + " in " + cardPaid.count + " payments.")
+            if (isNaN(cardPaid.paid)){
+                alert(card.name + " excluded from calculations for unreasonable nature.")
+            }
+            else {            
+                console.log("cardPaid: " + cardPaid.paid)
+                monthlyPay.push(card.payment)
+                cardStartingBalance.push(card.balance)
+                totals.push(cardPaid.paid)
+            }
         }
-        else {            
-            var cardPaid = calculateSimpleInt(card)[0]
-            console.log("cardPaid: " + cardPaid)
-            totals.push(cardPaid)
-        }
+        var monthlyTotal = roundCents(monthlyPay.reduce(getSum))
+        var startingBalance = roundCents(cardStartingBalance.reduce(getSum))
+        var totalPaid = roundCents(totals.reduce(getSum))
+        console.log("$" + totalPaid + ": totalPaid")
+        postMonthlyCost(monthlyTotal)
+        postStartingBalance(startingBalance)
+        postTotalPaid(totalPaid)
     }
-    console.log(totals)
-    var totalPaid = roundCents(totals.reduce(getSum))
-    console.log("$" + totalPaid + ": totalPaid")
-    return totalPaid
+}
+
+function postMonthlyCost(monthlyTotal){
+    var monthlyCost = document.getElementById("monthly-cost")
+    var theTotal = document.createElement("h2")
+    theTotal.setAttribute("id","your-monthly-cost")
+    theTotal.setAttribute("class", "bottom-line")
+    theTotal.appendChild(document.createTextNode(`$${formatNumber(monthlyTotal)}`))
+    monthlyCost.appendChild(theTotal)
+}
+
+function postStartingBalance(totalOwed){
+    console.log("starting balance: " + totalOwed)
+    var theTotalOwed = document.getElementById("total-owed")
+    var theTotal = document.createElement("h2")
+    theTotal.setAttribute("id","your-total-owed")
+    theTotal.setAttribute("class", "bottom-line")
+    theTotal.appendChild(document.createTextNode(`$${formatNumber(totalOwed)}`))
+    theTotalOwed.appendChild(theTotal)
+}
+
+function postTotalPaid(totalPaid){
+    var yourTotalPaid = document.getElementById("total-paid")
+    var theTotal = document.createElement("h2")
+    theTotal.setAttribute("id","your-total-paid")
+    theTotal.setAttribute("class", "bottom-line")
+    theTotal.appendChild(document.createTextNode(`$${formatNumber(totalPaid)}`))
+    yourTotalPaid.appendChild(theTotal)
 }
 
 // function watchForm() {
@@ -147,6 +187,7 @@ function addEmUp(loans){
   
 $(function() {
     console.log('App loaded! Waiting for submit!');
+    // gatherInfo(exampleLoans)
     gatherInfo(loans)
     // watchForm();
 });

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>title</title>
   <link rel="stylesheet" href="stylesheet.css" type="text/css">
+  <link rel="stylesheet" href="addNewCard.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -12,14 +13,33 @@
       <h3>Identify Your Debt. Seize Your Future.</h3>
     </header>
     <main>   
-        <div id="grid">
+        <div id="grid"></div>
+        <div id="results">
+          <h3 id="monthly-cost">MONTHLY COST:</h3>
+          <h3 id="total-owed">TOTAL OWED:</h3>
+          <h3 id="total-paid">TOTAL PAID BY END:</h3>
         </div>
-        <div id="results">Results down here</div>
+        <div id="list-builder"></div>
+        <div id="popup-box">
+            <img src="https://cdn3.iconfinder.com/data/icons/web-round-corner/614/278_-_Cancel-512.png" id="popup-close" />
+            <div id="popup-box-content">
+              <h1>Add New Debt Hurdle</h1>
+              <form id="popup-form" name="addNewCard">
+                <input type="hidden" name="list" value="key_list_etc" />
+                <input type="text" class="input-fields" required id="new-card-name" maxlength="17" name="name" placeholder="Name" />
+                <input type="number" required step="any" id="new-card-balance" class="currency input-fields" min="0.01" max="2000000.00" name="balance" placeholder="Balance" />
+                <input type="number" required step="any" id="new-card-apr" class="percent input-fields" min="0.00" max="100.00" name="APR" placeholder="APR" />
+                <input type="number" required step="any" id="new-card-pay" class="currency input-fields" min="0.01" max="1000000.00" name="Payment" placeholder="Monthly Pay" />
+                <button type="button" id="new-card-cancel" name="Cancel">Cancel</button>
+                <button type="submit" id="new-card-save" name="Add-Hurdle">Add Hurdle</button>
+                <div id="longevity"></div>
+              </form>
+            </div>
+        </div>
     </main>
-    <footer>
-        
-    </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="exampleLoans.js"></script>
     <script src="script.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>

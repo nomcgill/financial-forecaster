@@ -1,0 +1,54 @@
+#popup-box {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #911e26;
+    color: #FFFFFF;
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    border: 10px solid #FFFFFF;
+    display: none;
+}
+
+#popup-close {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    cursor: pointer;
+    width: 40px;
+}
+
+#popup-box-content {
+    text-align: center;
+}
+
+#popup-box h1 {
+    margin: 0;
+}
+
+#popup-box form {
+    margin-bottom: 0px;
+}
+
+#popup-box input {
+    padding: 8px;
+    border: 1px solid #333;
+    width: 40%;
+    margin: 5px;
+}
+
+#popup-box button {
+    padding: 10px;
+    border: 1px solid #333;
+    margin-top: 5px;
+}
+
+input#new-card-name {
+    margin-left: 14px;
+}
+
+input#new-card-apr {
+    margin-left: 3px;
+}
