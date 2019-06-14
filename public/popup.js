@@ -1,3 +1,4 @@
+
 function onAddHurdleClick(){
   if(loans.length < 9) {
     console.log('addHurdleClick is being run')
@@ -5,7 +6,15 @@ function onAddHurdleClick(){
     $("#list-builder").fadeIn("fast", () => {
         $("#popup-box").fadeIn("fast", () => {});
     });
-  
+
+    // var numberBoxes = "new-card-pay, new-card-apr, new-card-balance"
+
+    // document.getElementById("new-card-pay","new-card-apr","new-card-balance").addEventListener("keydown", timeFrame)
+    document.getElementById("new-card-pay").addEventListener("keyup", timeFrame)
+    document.getElementById("new-card-apr").addEventListener("keyup", timeFrame)
+    document.getElementById("new-card-balance").addEventListener("keyup", timeFrame)
+
+
     $("#popup-close").click(() => {
         $("#list-builder, #popup-box").hide();
     });             
@@ -21,34 +30,40 @@ function onAddHurdleClick(){
 $("form").submit(() => {
   event.preventDefault();
   var newCard = gatherInputs()
-  loans.push(newCard)
+  if (calculateSimpleInt(newCard) !== false){
+    loans.push(newCard)
+  }
+  else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
   $("#list-builder, #popup-box").hide();
+  $("#grid").empty()
+  gatherInfo(loans)
 })
 
 function timeFrame(){
-  $("#new-card-pay, #new-card-apr, #new-card-balance").change(() => {
+  // var numberBoxes = "#new-card-pay, #new-card-apr, #new-card-balance"
+  // $(numberBoxes).change(() => {
     var card = gatherInputs()
-    console.log("card balance " + card.balance + " & card rate " + card.rate + " & card payment " + card.payment)
+    // console.log("card balance " + card.balance + " & card rate " + card.rate + " & card payment " + card.payment)
     
-    if ( card.balance !== "" && card.rate !== "" && card.payment !== "" ){
+    if ( card.balance !== 0 && card.rate !== 0 && card.payment !== 0 ){
       // console.log([card])
       var intCalc = calculateSimpleInt(card)
-      console.log(intCalc)
+      // console.log(intCalc)
       if (!isNaN(intCalc.count)){
         $(`#longevity`).replaceWith(
         `<div id="longevity">${intCalc.count} payments will cost you $${formatNumber(intCalc.paid)}.</div>`
       )};
       if (isNaN(intCalc.count)){
         $(`#longevity`).replaceWith(
-        `<div id="longevity">With that payment and interest? Not in this lifetime, buckaroo.</div>`
+        `<div id="longevity">Increase your payments if you ever want to finish...</div>`
       )};
     }
     else {
       $(`#longevity`).replaceWith(
         `<div id="longevity">Still needs more info...</div>`
       )}
-  }
-)};
+  // })
+};
 
 function gatherInputs(){
   var NAME = document.getElementById("new-card-name").value
@@ -109,7 +124,7 @@ $(document).ready(function() {
     $('input.currency').currencyInput();
     $('input.percent').percentInput();
     watchForm()
-    timeFrame()
+    // timeFrame()
 });
 
 function watchForm(){

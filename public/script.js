@@ -67,7 +67,7 @@ function createAddCardBox(){
 }
 
 function calculateSimpleInt(card){
-    console.log([card])
+    // console.log([card])
     let count = 0
     let balanceTracker = [card.balance]
     let payments = []
@@ -77,20 +77,20 @@ function calculateSimpleInt(card){
             count = count + 1
             var paid = roundCents(payments.reduce(getSum))
             var results = ["$" + paid + " paid on " + card.name, "Stopped counting after " + ((count + 1)/12) + " years because balance reached over $1,000,000."]
-            console.log(results)
-            return [results]
+            // console.log(results)
+            return false
         }
         if (count > 1999){
             count = count + 1
             var paid = roundCents(payments.reduce(getSum))
-            console.log("A lifetime of debt.")
+            // console.log("A lifetime of debt.")
             var results = ["$" + paid + " paid", "Stopped counting after " + (count + 1) + " months."]
-            console.log(results)
-            return [results]
+            // console.log(results)
+            return false
         }      
         lastKnownBalance = balanceTracker[balanceTracker.length -1]
         if (card.payment < lastKnownBalance){
-            console.log("Payment made of " + card.payment)
+            // console.log("Payment made of " + card.payment)
             lastKnownBalance = lastKnownBalance * card.rate / 1200 + lastKnownBalance - card.payment;
             balanceTracker.push(lastKnownBalance);
             payments.push(card.payment)
@@ -104,7 +104,7 @@ function calculateSimpleInt(card){
                 count : count + 1,
                 lastKnownBalance : lastKnownBalance
             }
-            console.log(results.count + " : count")
+            // console.log(results.count + " : count")
             // console.log("Made it to the end! Results: " + card.name + ": " + results.paid + " in " + count + " months.")
             return results
         }
@@ -124,16 +124,16 @@ function addEmUp(loans){
     var cardStartingBalance = []
     var totals = []
     if (loans.length > 0 ){
+        console.log()
         for (let i=0; i < loans.length; i++){
             var card = loans[i]
-            console.log(card.name + ":")
+            // console.log(card.name + ":")
             var cardPaid = calculateSimpleInt(card)
             console.log(cardPaid.paid + " in " + cardPaid.count + " payments.")
             if (isNaN(cardPaid.paid)){
                 alert(card.name + " excluded from calculations for unreasonable nature.")
             }
             else {            
-                console.log("cardPaid: " + cardPaid.paid)
                 monthlyPay.push(card.payment)
                 cardStartingBalance.push(card.balance)
                 totals.push(cardPaid.paid)
@@ -143,9 +143,18 @@ function addEmUp(loans){
         var startingBalance = roundCents(cardStartingBalance.reduce(getSum))
         var totalPaid = roundCents(totals.reduce(getSum))
         console.log("$" + totalPaid + ": totalPaid")
+        emptyTotals()
         postMonthlyCost(monthlyTotal)
         postStartingBalance(startingBalance)
         postTotalPaid(totalPaid)
+    }
+}
+
+function emptyTotals(){
+    if (document.getElementById("your-monthly-cost")){
+        document.getElementById("your-monthly-cost").remove();
+        document.getElementById("your-total-owed").remove();
+        document.getElementById("your-total-paid").remove();
     }
 }
 
@@ -159,7 +168,7 @@ function postMonthlyCost(monthlyTotal){
 }
 
 function postStartingBalance(totalOwed){
-    console.log("starting balance: " + totalOwed)
+    // console.log("starting balance: " + totalOwed)
     var theTotalOwed = document.getElementById("total-owed")
     var theTotal = document.createElement("h2")
     theTotal.setAttribute("id","your-total-owed")

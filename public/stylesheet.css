@@ -53,15 +53,15 @@ body {
   padding: 11px;
   margin: 11px;
   height: 82px;
-
+  cursor: pointer;
 }
 
-  #area1, #defaultBox {
+  #area1 {
     background-color: lime;
   }
   
   #area2 {
-    background-color: yellow;
+    background-color: rgb(255, 255, 115);
   }
 
   #area3 {
@@ -94,6 +94,10 @@ body {
 
   #area10 {
     background-color: rgb(250, 135, 189);
+  }
+
+  #defaultBox {
+    background-color: rgb(153, 126, 161);
   }
 
   #list-builder {
