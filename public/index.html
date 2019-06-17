@@ -9,15 +9,23 @@
   </head>
   <body>
     <header>
-      <h1>Financial Forecaster</h1>
-      <h3>Identify Your Debt. Seize Your Future.</h3>
+      <div id="header-grid">
+        <div id="left-header">
+          <h1>Financial Forecaster</h1>
+          <h3>Identify Your Debt. Seize Your Future.</h3>
+        </div>
+        <nav>
+            Profile: <span id="profile">nomcgill@gmail.com</span>
+        </nav>
+      </div>
     </header>
     <main>   
         <div id="grid"></div>
         <div id="results">
-          <h3 id="monthly-cost">MONTHLY COST:</h3>
           <h3 id="total-owed">TOTAL OWED:</h3>
-          <h3 id="total-paid">TOTAL PAID BY END:</h3>
+          <h3 id="monthly-cost">EACH MONTH:</h3>
+          <h3 id="total-paid">FINAL PAID:</h3>
+          <h3 id="save-profile">S A V E</div>
         </div>
         <div id="list-builder"></div>
         <div id="popup-box">
@@ -28,7 +36,7 @@
                 <input type="hidden" name="list" value="key_list_etc" />
                 <input type="text" class="input-fields" required id="new-card-name" maxlength="17" name="name" placeholder="Name" autofocus/>
                 <input type="number" required step="any" id="new-card-balance" class="currency input-fields" min="0.01" max="2000000.00" name="balance" placeholder="Balance" />
-                <input type="number" required step="any" id="new-card-apr" class="percent input-fields" min="0.00" max="100.00" name="APR" placeholder="APR" />
+                <input type="number" required step="any" id="new-card-apr" class="percent input-fields" min="0.00" max="200.00" name="APR" placeholder="APR" />
                 <input type="number" required step="any" id="new-card-pay" class="currency input-fields" min="0.01" max="1000000.00" name="Payment" placeholder="Monthly Pay" />
                 <button type="button" id="new-card-cancel" name="Cancel">Cancel</button>
                 <button type="submit" id="new-card-save" name="Add-Hurdle">Add Hurdle</button>
@@ -40,6 +48,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="exampleLoans.js"></script>
     <script src="script.js"></script>
-    <script src="popup.js"></script>
+    <script src="addpopup.js"></script>
 </body>
 </html>

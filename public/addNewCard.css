@@ -3,12 +3,12 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: #911e26;
+    background-color: rgb(71, 190, 91);
     color: #FFFFFF;
     width: 90%;
     max-width: 600px;
     padding: 30px;
-    border: 10px solid #FFFFFF;
+    border: 3px solid #FFFFFF;
     display: none;
 }
 

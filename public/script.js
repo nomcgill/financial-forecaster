@@ -9,14 +9,11 @@ var loans = []
 // });
 
 function gatherInfo(loans){
-    // if (loans.length > 0){
         createCards(loans)
-        createAddCardBox()
         addEmUp(loans)
-    // }
-    // else {
-        // createAddCardBox()
-    // }
+        if (loans.length < 8){
+        createAddCardBox()
+        }
 }
 
 function roundCents(input){
@@ -196,7 +193,7 @@ function postTotalPaid(totalPaid){
   
 $(function() {
     console.log('App loaded! Waiting for submit!');
-    // gatherInfo(exampleLoans)
-    gatherInfo(loans)
+    gatherInfo(exampleLoans)
+    // gatherInfo(loans)
     // watchForm();
 });

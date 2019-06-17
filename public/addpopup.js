@@ -1,6 +1,9 @@
 
 function onAddHurdleClick(){
-  if(loans.length < 9) {
+  if(exampleLoans.length = 7) {
+    alert("Last hurdle space! Financial forecaster won't fit more than this one!")
+
+
     console.log('addHurdleClick is being run')
     $('#popup-form').trigger("reset")
     $("#list-builder").fadeIn("fast", () => {
@@ -22,21 +25,20 @@ function onAddHurdleClick(){
       $("#list-builder, #popup-box").hide();
   });                                                                                                                
   }
-  else {
-  alert("Financial forecaster won't fit more than 9 hurdles!")
-  }
 }
 
 $("form").submit(() => {
   event.preventDefault();
   var newCard = gatherInputs()
   if (calculateSimpleInt(newCard) !== false){
-    loans.push(newCard)
+    exampleLoans.push(newCard)
+    // loans.push(newCard)
+    $("#list-builder, #popup-box").hide();
   }
   else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
-  $("#list-builder, #popup-box").hide();
   $("#grid").empty()
-  gatherInfo(loans)
+  gatherInfo(exampleLoans)
+  // gatherInfo(loans)
 })
 
 function timeFrame(){
