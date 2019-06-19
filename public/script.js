@@ -2,11 +2,8 @@
 
 // import { link } from "fs";
 
-var loans = []
-
-// $(document).ready(function(loans) {
-
-// });
+// var loans = []
+var loans = exampleLoans
 
 function gatherInfo(loans){
         createCards(loans)
@@ -37,21 +34,13 @@ function createCards(loans){
         var newCard = document.createElement("div")
         var children = grid.children.length + 1
         newCard.setAttribute("id", "area" + children)
-        newCard.setAttribute("class", "boxes")
+        newCard.setAttribute("class", "boxes editable")
+        newCard.setAttribute("onClick", "replyClick()")
         newCard.appendChild(document.createTextNode(`${loan.name}`))
         newCard.appendChild(document.createTextNode(`Payment: ${loan.payment}`))
         grid.appendChild(newCard)
-        // document.getElementById(`area${children}`).addEventListener("click", onAddHurdleClick);
     })
 }
-
-// var grid2 = document.getElementById("results")
-// var eachResult = document.createElement("div")
-// var children = grid2.children.length + 1
-// oneResult.setAttribute("id", "oneResult" + children)
-// oneResult.setAttribute("class", "footResults")
-// oneResult.appendChild(document.createTextNode(`Hello! Number`))
-// grid2.appendChild(oneResult)
 
 function createAddCardBox(){
     var grid = document.getElementById("grid")
@@ -63,10 +52,14 @@ function createAddCardBox(){
     document.getElementById("defaultBox").addEventListener("click", onAddHurdleClick);
 }
 
+// function existingCardClick(){
+//     document.getElementsByClassName("editable").addEventListener("click", existingCardClick);
+// }
+
 function calculateSimpleInt(card){
-    // console.log([card])
     let count = 0
     let balanceTracker = [card.balance]
+    // console.log(card.balance)
     let payments = []
     let lastKnownBalance = card.balance
     do {
@@ -126,7 +119,7 @@ function addEmUp(loans){
             var card = loans[i]
             // console.log(card.name + ":")
             var cardPaid = calculateSimpleInt(card)
-            console.log(cardPaid.paid + " in " + cardPaid.count + " payments.")
+            // console.log(cardPaid.paid + " in " + cardPaid.count + " payments.")
             if (isNaN(cardPaid.paid)){
                 alert(card.name + " excluded from calculations for unreasonable nature.")
             }
@@ -165,7 +158,6 @@ function postMonthlyCost(monthlyTotal){
 }
 
 function postStartingBalance(totalOwed){
-    // console.log("starting balance: " + totalOwed)
     var theTotalOwed = document.getElementById("total-owed")
     var theTotal = document.createElement("h2")
     theTotal.setAttribute("id","your-total-owed")
@@ -182,18 +174,16 @@ function postTotalPaid(totalPaid){
     theTotal.appendChild(document.createTextNode(`$${formatNumber(totalPaid)}`))
     yourTotalPaid.appendChild(theTotal)
 }
-
-// function watchForm() {
-//     $('form').submit(event => {
-//       event.preventDefault();
-//        var ratingInput = document.getElementById("challenge-rating").value
-//        checkMonsterList(ratingInput)
-//        });
-//   }
   
 $(function() {
     console.log('App loaded! Waiting for submit!');
-    gatherInfo(exampleLoans)
+    gatherInfo(loans)
     // gatherInfo(loans)
-    // watchForm();
+});
+
+$(document).ready(function() {
+    $('input.currency').currencyInput();
+    $('input.percent').percentInput();
+    watchForAdd()
+    watchForEdits()
 });

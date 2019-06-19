@@ -1,3 +1,4 @@
+
 #popup-box {
     position: fixed;
     left: 50%;
@@ -10,6 +11,17 @@
     padding: 30px;
     border: 3px solid #FFFFFF;
     display: none;
+    border-radius: 5px;
+}
+
+#new-card-save, #new-card-cancel {
+    cursor: pointer;
+    background-color: rgb(39, 105, 37);
+}
+
+#delete-card {
+    cursor: pointer;
+    background-color: rgb(141, 0, 0);
 }
 
 #popup-close {
@@ -24,8 +36,9 @@
     text-align: center;
 }
 
-#popup-box h1 {
+#popup-box h2 {
     margin: 0;
+    font-size: 1.8em;
 }
 
 #popup-box form {
@@ -41,12 +54,14 @@
 
 #popup-box button {
     padding: 10px;
-    border: 1px solid #333;
+    border: 2px solid rgb(255, 255, 255);
     margin-top: 5px;
+    color: white;
 }
 
 input#new-card-name {
     margin-left: 14px;
+    margin-top: 15px;
 }
 
 input#new-card-apr {

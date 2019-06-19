@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="stylesheet.css" type="text/css">
   <link rel="stylesheet" href="addNewCard.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -31,7 +32,7 @@
         <div id="popup-box">
             <img src="https://cdn3.iconfinder.com/data/icons/web-round-corner/614/278_-_Cancel-512.png" id="popup-close" />
             <div id="popup-box-content">
-              <h1>Add New Debt Hurdle</h1>
+              <h2 id="add-title">Add New Debt Hurdle</h2>
               <form id="popup-form" name="addNewCard">
                 <input type="hidden" name="list" value="key_list_etc" />
                 <input type="text" class="input-fields" required id="new-card-name" maxlength="17" name="name" placeholder="Name" autofocus/>
@@ -39,6 +40,7 @@
                 <input type="number" required step="any" id="new-card-apr" class="percent input-fields" min="0.00" max="200.00" name="APR" placeholder="APR" />
                 <input type="number" required step="any" id="new-card-pay" class="currency input-fields" min="0.01" max="1000000.00" name="Payment" placeholder="Monthly Pay" />
                 <button type="button" id="new-card-cancel" name="Cancel">Cancel</button>
+                <button type="button" id="delete-card" name="Delete" class="hidden">Remove</button>
                 <button type="submit" id="new-card-save" name="Add-Hurdle">Add Hurdle</button>
                 <div id="longevity"></div>
               </form>
@@ -49,5 +51,6 @@
     <script src="exampleLoans.js"></script>
     <script src="script.js"></script>
     <script src="addpopup.js"></script>
+    <script src="editCard.js"></script>
 </body>
 </html>

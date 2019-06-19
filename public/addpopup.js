@@ -1,45 +1,39 @@
 
+// console.log(loans[1].name + "global scope heard")
+
 function onAddHurdleClick(){
-  if(exampleLoans.length = 7) {
-    alert("Last hurdle space! Financial forecaster won't fit more than this one!")
-
-
-    console.log('addHurdleClick is being run')
     $('#popup-form').trigger("reset")
     $("#list-builder").fadeIn("fast", () => {
         $("#popup-box").fadeIn("fast", () => {});
     });
 
-    // var numberBoxes = "new-card-pay, new-card-apr, new-card-balance"
-
-    // document.getElementById("new-card-pay","new-card-apr","new-card-balance").addEventListener("keydown", timeFrame)
     document.getElementById("new-card-pay").addEventListener("keyup", timeFrame)
     document.getElementById("new-card-apr").addEventListener("keyup", timeFrame)
     document.getElementById("new-card-balance").addEventListener("keyup", timeFrame)
 
+    $("#popup-form").submit(() => {
+      event.preventDefault();
+      var newCard = gatherInputs()
+      console.log(newCard)
+      if (calculateSimpleInt(newCard) !== false){
+        loans.push(newCard)
+        $("#list-builder, #popup-box").hide();
+      }
+      else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
+      $("#grid").empty()
+      gatherInfo(loans)
+    })
 
     $("#popup-close").click(() => {
         $("#list-builder, #popup-box").hide();
     });             
     $("#new-card-cancel").click(() => {
       $("#list-builder, #popup-box").hide();
-  });                                                                                                                
-  }
+  });              
+  if (loans.length = 7){
+    alert("Financial Forecaster is limited to 8 hurdles. This is one the last available!")
+  }                                                                                                  
 }
-
-$("form").submit(() => {
-  event.preventDefault();
-  var newCard = gatherInputs()
-  if (calculateSimpleInt(newCard) !== false){
-    exampleLoans.push(newCard)
-    // loans.push(newCard)
-    $("#list-builder, #popup-box").hide();
-  }
-  else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
-  $("#grid").empty()
-  gatherInfo(exampleLoans)
-  // gatherInfo(loans)
-})
 
 function timeFrame(){
   // var numberBoxes = "#new-card-pay, #new-card-apr, #new-card-balance"
@@ -121,16 +115,9 @@ function gatherInputs(){
       });
     };
   })(jQuery);
-  
-$(document).ready(function() {
-    $('input.currency').currencyInput();
-    $('input.percent').percentInput();
-    watchForm()
-    // timeFrame()
-});
 
-function watchForm(){
+function watchForAdd(){
   $('defaultBox').click(function(){
-    onAddHurdleClick()
+    onAddHurdleClick(loans)
   });
 }

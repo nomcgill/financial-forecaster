@@ -6,8 +6,14 @@
 }
 
 html {
-  height: 100%;
-  background-image: linear-gradient(to bottom right, white, rgb(71, 190, 91));
+  max-height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  /* background-color: darkslategray; */
+}
+
+.hidden {
+  display: none;
 }
 
 h1 {
@@ -16,6 +22,10 @@ h1 {
 
 header {
   margin-bottom: 12px;
+}
+
+#left-header {
+  font-family: 'Roboto Slab', serif;
 }
 
 header h3 {
@@ -29,8 +39,11 @@ nav {
   background-color: rgb(115, 192, 128);
   color: white;
   border-radius: 2px;
+  padding-top: 2px;
+  height: 18px;
   width: 200px;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 header, #results, .boxes {
@@ -38,7 +51,7 @@ header, #results, .boxes {
 }
 
 body {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Nunito', sans-serif;
     margin: 20px;
 }
 
@@ -49,7 +62,7 @@ body {
   margin-left: auto; 
   margin-right: auto; 
   bottom: 33px;
-  width: 250px;
+  width: 280px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 55px);
@@ -75,49 +88,46 @@ body {
   padding: 9px;
 }
 
-#save-profile:hover {
-  border: solid 2px black;
-  padding: 6px;
-}
-
 .boxes {
   padding: 11px;
   margin: 11px;
   height: 82px;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 1.2em;
+  color:white;
 }
 
   #area1 {
-    background-color: rgb(255, 161, 213);
+    background-color: rgb(59, 116, 62);
   }
   
   #area2 {
-    background-color: rgb(255, 255, 115);
+    background-color: rgba(59, 116, 62, 0.95);
   }
 
   #area3 {
-    background-color: darkcyan;
+    background-color: rgba(59, 116, 62, 0.90);
   }
 
   #area4 {
-    background-color: lightcoral;
+    background-color: rgba(59, 116, 62, 0.85);
   }
 
   #area5 {
-    background-color: rgb(1, 155, 104);
+    background-color: rgba(59, 116, 62, 0.80);
   }
 
   #area6 {
-    background-color: rgb(255, 255, 170);
+    background-color: rgba(59, 116, 62, 0.75);
   }
 
   #area7 {
-    background-color: rgb(255, 164, 45);
+    background-color: rgba(59, 116, 62, 0.70);
   }
 
   #area8 {
-    background-color: rgb(94, 173, 221);
+    background-color: rgba(59, 116, 62, 0.65);
   }
 
   #area9 {
@@ -129,12 +139,14 @@ body {
   }
 
   #defaultBox {
+    color: rgb(146, 146, 146);
     background-color: white;
-    border: solid 1px rgb(71, 190, 91);
+    border: solid 1px rgb(170, 170, 170);
   }
 
   #defaultBox:hover {
-    border: solid 2px black;
+    color: rgb(95, 95, 95);
+    border: solid 2px rgba(59, 116, 62, 0.9);
     padding: 10px;
   }
 
@@ -150,16 +162,10 @@ body {
     display: none;
 }
 
-input {
-  font-family: 'Roboto Slab', serif;
-}
-
-button {
-  font-family: 'Roboto Slab', serif;
-}
-
 #save-profile {
   background-color: rgb(255, 255, 255);
+  opacity: 0.6;
+  transition: 0.3s;
   width: 100px;
   margin-left: auto; 
   margin-right: auto; 
@@ -168,6 +174,10 @@ button {
   color: black;
   cursor: pointer;
   border-radius: 4px;
+}
+
+#save-profile:hover {
+  opacity: 1;  
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -200,7 +210,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   #header-grid {
-    /* width: 100%; */
+    /* width: 300px; */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, 100px);
@@ -208,14 +218,17 @@ input[type=number]::-webkit-outer-spin-button {
   }
   
   nav {
-    text-align: right;
+    display: table-cell;
     font-size: 1.05em;
-    margin-right: 15px;
-    width: 250px;
-    padding: 20px;
-    background-color: transparent;
-    color: black;
-    text-decoration: underline;
+    margin-right: 14px;
+    margin-top: 25px;
+    width: 280px;
+    height: 30px;
+    padding: 5px;
+    text-align: center;
+    background-color: rgb(115, 192, 128);
+    color: white;
+    border-radius: 2px;
   }
 
   #grid {
