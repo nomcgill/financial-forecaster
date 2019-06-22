@@ -1,20 +1,34 @@
 
-// console.log(loans[1].name + "global scope heard")
-
 function onAddHurdleClick(){
-    $('#popup-form').trigger("reset")
-    $("#list-builder").fadeIn("fast", () => {
-        $("#popup-box").fadeIn("fast", () => {});
-    });
+  document.getElementById("popup-form").reset();
+  $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
+  if (loans.length === 7){
+    alert("Financial Forecaster is limited to 8 hurdles. This is one the last available!")
+  }  
+  $("#list-builder").fadeIn("fast", () => {
+      $("#popup-box").fadeIn("fast", () => {});
+  });
 
-    document.getElementById("new-card-pay").addEventListener("keyup", timeFrame)
-    document.getElementById("new-card-apr").addEventListener("keyup", timeFrame)
-    document.getElementById("new-card-balance").addEventListener("keyup", timeFrame)
+  var cardName = document.getElementById("new-card-name")
+  var cardPay = document.getElementById("new-card-pay")
+  var cardAPR = document.getElementById("new-card-apr")
+  var cardBal = document.getElementById("new-card-balance")
 
-    $("#popup-form").submit(() => {
-      event.preventDefault();
-      var newCard = gatherInputs()
-      console.log(newCard)
+  cardPay.addEventListener("keyup", timeFrame)
+  cardAPR.addEventListener("keyup", timeFrame)
+  cardBal.addEventListener("keyup", timeFrame)
+  cardName.setAttribute("value", ``)
+  cardPay.setAttribute("value", ``)
+  cardAPR.setAttribute("value", ``)
+  cardBal.setAttribute("value", ``)
+
+  $("#popup-form").submit(event => {
+    console.log("ADD form submit ran")
+    event.preventDefault()
+    event.stopImmediatePropagation();
+    var text = $('#add-title').text();
+    if(text === "Add New Debt Hurdle"){
+      newCard = gatherInputs()
       if (calculateSimpleInt(newCard) !== false){
         loans.push(newCard)
         $("#list-builder, #popup-box").hide();
@@ -22,17 +36,18 @@ function onAddHurdleClick(){
       else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
       $("#grid").empty()
       gatherInfo(loans)
-    })
+      stopListening()
+    }
+  })
 
-    $("#popup-close").click(() => {
-        $("#list-builder, #popup-box").hide();
-    });             
-    $("#new-card-cancel").click(() => {
-      $("#list-builder, #popup-box").hide();
-  });              
-  if (loans.length = 7){
-    alert("Financial Forecaster is limited to 8 hurdles. This is one the last available!")
-  }                                                                                                  
+  $("#popup-close").click(() => {
+    $("#list-builder, #popup-box").hide();
+    stopListening()
+  });             
+  $("#new-card-cancel").click(() => {
+    $("#list-builder, #popup-box").hide();
+    stopListening()
+  });                                                                                                              
 }
 
 function timeFrame(){
@@ -72,7 +87,6 @@ function gatherInputs(){
     rate : APR,
     payment : PAY
   }
-  // console.log("stats: " + stats.name + " added")
   return stats
 }
 

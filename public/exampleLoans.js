@@ -27,7 +27,8 @@ let exampleLoans = [
         name: "Student Loan",
         balance: 18000,
         rate: 4.25,
-        payment: 310    
+        payment: 310   
+        
     },
     {
         name: "Child Support",

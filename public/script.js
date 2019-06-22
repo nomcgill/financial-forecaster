@@ -6,12 +6,17 @@
 var loans = exampleLoans
 
 function gatherInfo(loans){
-        createCards(loans)
+    console.log(loans.length + ": loans length at gather info")
+        loans.forEach((loan) => {
+            createCards(loan)
+        })
         addEmUp(loans)
         if (loans.length < 8){
         createAddCardBox()
         }
 }
+
+// debug(gatherInfo)
 
 function roundCents(input){
     return Math.round(100 *(input))/100;
@@ -27,9 +32,7 @@ function getSum(total, num) {
     return total + num;
 }
 
-function createCards(loans){
-    loans.forEach((loan) => {
-        // console.log("Loan heard: " + loan.name)
+function createCards(loan){
         var grid = document.getElementById("grid")
         var newCard = document.createElement("div")
         var children = grid.children.length + 1
@@ -39,7 +42,6 @@ function createCards(loans){
         newCard.appendChild(document.createTextNode(`${loan.name}`))
         newCard.appendChild(document.createTextNode(`Payment: ${loan.payment}`))
         grid.appendChild(newCard)
-    })
 }
 
 function createAddCardBox(){
@@ -52,14 +54,9 @@ function createAddCardBox(){
     document.getElementById("defaultBox").addEventListener("click", onAddHurdleClick);
 }
 
-// function existingCardClick(){
-//     document.getElementsByClassName("editable").addEventListener("click", existingCardClick);
-// }
-
 function calculateSimpleInt(card){
     let count = 0
     let balanceTracker = [card.balance]
-    // console.log(card.balance)
     let payments = []
     let lastKnownBalance = card.balance
     do {
@@ -67,20 +64,16 @@ function calculateSimpleInt(card){
             count = count + 1
             var paid = roundCents(payments.reduce(getSum))
             var results = ["$" + paid + " paid on " + card.name, "Stopped counting after " + ((count + 1)/12) + " years because balance reached over $1,000,000."]
-            // console.log(results)
             return false
         }
         if (count > 1999){
             count = count + 1
             var paid = roundCents(payments.reduce(getSum))
-            // console.log("A lifetime of debt.")
             var results = ["$" + paid + " paid", "Stopped counting after " + (count + 1) + " months."]
-            // console.log(results)
             return false
         }      
         lastKnownBalance = balanceTracker[balanceTracker.length -1]
         if (card.payment < lastKnownBalance){
-            // console.log("Payment made of " + card.payment)
             lastKnownBalance = lastKnownBalance * card.rate / 1200 + lastKnownBalance - card.payment;
             balanceTracker.push(lastKnownBalance);
             payments.push(card.payment)
@@ -94,8 +87,6 @@ function calculateSimpleInt(card){
                 count : count + 1,
                 lastKnownBalance : lastKnownBalance
             }
-            // console.log(results.count + " : count")
-            // console.log("Made it to the end! Results: " + card.name + ": " + results.paid + " in " + count + " months.")
             return results
         }
     }
@@ -109,7 +100,6 @@ function findInterestPaid(card){
 }
 
 function addEmUp(loans){
-    console.log("addEmUp is run")
     var monthlyPay = []
     var cardStartingBalance = []
     var totals = []
@@ -117,9 +107,7 @@ function addEmUp(loans){
         console.log()
         for (let i=0; i < loans.length; i++){
             var card = loans[i]
-            // console.log(card.name + ":")
             var cardPaid = calculateSimpleInt(card)
-            // console.log(cardPaid.paid + " in " + cardPaid.count + " payments.")
             if (isNaN(cardPaid.paid)){
                 alert(card.name + " excluded from calculations for unreasonable nature.")
             }
@@ -132,7 +120,6 @@ function addEmUp(loans){
         var monthlyTotal = roundCents(monthlyPay.reduce(getSum))
         var startingBalance = roundCents(cardStartingBalance.reduce(getSum))
         var totalPaid = roundCents(totals.reduce(getSum))
-        console.log("$" + totalPaid + ": totalPaid")
         emptyTotals()
         postMonthlyCost(monthlyTotal)
         postStartingBalance(startingBalance)
@@ -178,10 +165,6 @@ function postTotalPaid(totalPaid){
 $(function() {
     console.log('App loaded! Waiting for submit!');
     gatherInfo(loans)
-    // gatherInfo(loans)
-});
-
-$(document).ready(function() {
     $('input.currency').currencyInput();
     $('input.percent').percentInput();
     watchForAdd()
