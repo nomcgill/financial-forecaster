@@ -6,7 +6,7 @@ let exampleLoans = [
         payment: 200
     },
     {
-        name: "Bank of America CC",
+        name: "Wells Fargo CC",
         balance: 4000,
         rate: 15.5,
         payment: 2000    

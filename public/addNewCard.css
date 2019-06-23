@@ -4,7 +4,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgb(71, 190, 91);
+    background-color: rgb(50, 121, 62);
     color: #FFFFFF;
     width: 90%;
     max-width: 600px;
@@ -38,7 +38,7 @@
 
 #popup-box h2 {
     margin: 0;
-    font-size: 1.8em;
+    font-size: 2em;
 }
 
 #popup-box form {
@@ -53,10 +53,30 @@
 }
 
 #popup-box button {
+    font-family: 'Nunito', sans-serif;
     padding: 10px;
     border: 2px solid rgb(255, 255, 255);
     margin-top: 5px;
-    color: white;
+    color: black;
+    border-radius: 5px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    background-color: rgb(255, 255, 255);
+    opacity: 0.6;
+    transition: 0.3s;
+  }
+  
+  #popup-box button:hover {
+    opacity: 1;  
+  }
+
+input {
+    font-family: 'Nunito', sans-serif;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2em;
+    /* border: 2px solid black; */
 }
 
 input#new-card-name {
@@ -66,4 +86,16 @@ input#new-card-name {
 
 input#new-card-apr {
     margin-left: 3px;
+}
+
+#longevity {
+    font-size: 1.1em;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+    input {
+        text-align: left;
+    }
 }

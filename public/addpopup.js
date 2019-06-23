@@ -23,7 +23,6 @@ function onAddHurdleClick(){
   cardBal.setAttribute("value", ``)
 
   $("#popup-form").submit(event => {
-    console.log("ADD form submit ran")
     event.preventDefault()
     event.stopImmediatePropagation();
     var text = $('#add-title').text();
@@ -36,8 +35,8 @@ function onAddHurdleClick(){
       else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
       $("#grid").empty()
       gatherInfo(loans)
-      stopListening()
     }
+    stopListening()
   })
 
   $("#popup-close").click(() => {
@@ -51,19 +50,25 @@ function onAddHurdleClick(){
 }
 
 function timeFrame(){
-  // var numberBoxes = "#new-card-pay, #new-card-apr, #new-card-balance"
-  // $(numberBoxes).change(() => {
     var card = gatherInputs()
-    // console.log("card balance " + card.balance + " & card rate " + card.rate + " & card payment " + card.payment)
     
     if ( card.balance !== 0 && card.rate !== 0 && card.payment !== 0 ){
-      // console.log([card])
       var intCalc = calculateSimpleInt(card)
-      // console.log(intCalc)
       if (!isNaN(intCalc.count)){
-        $(`#longevity`).replaceWith(
-        `<div id="longevity">${intCalc.count} payments will cost you $${formatNumber(intCalc.paid)}.</div>`
-      )};
+        var months = intCalc.count
+        var years = Math.round(10*months/12) / 10
+        var howMuch = formatNumber(intCalc.paid)
+        if (months > 23) {
+          $(`#longevity`).replaceWith(
+            `<div id="longevity">${months} payments (${years} yrs) will cost you $${howMuch}.</div>`
+            )
+        }
+        if (intCalc.count <= 23) {
+          $(`#longevity`).replaceWith(
+          `<div id="longevity">${months} payments will cost you $${howMuch}.</div>`
+          )
+        }
+      };
       if (isNaN(intCalc.count)){
         $(`#longevity`).replaceWith(
         `<div id="longevity">Increase your payments if you ever want to finish...</div>`

@@ -84,8 +84,8 @@ body {
 }
   
 .boxes:hover {
-  border: solid 2px rgb(19, 94, 1);
-  padding: 9px;
+  border: solid 3px white;
+  padding: 8px;
 }
 
 .boxes {
@@ -96,6 +96,10 @@ body {
   border-radius: 4px;
   font-size: 1.2em;
   color:white;
+}
+
+.boxes h3 {
+  font-size: 1.4em;
 }
 
   #area1 {

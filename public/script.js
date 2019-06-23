@@ -2,11 +2,10 @@
 
 // import { link } from "fs";
 
-// var loans = []
-var loans = exampleLoans
+var loans = []
+// var loans = exampleLoans
 
 function gatherInfo(loans){
-    console.log(loans.length + ": loans length at gather info")
         loans.forEach((loan) => {
             createCards(loan)
         })
@@ -15,8 +14,6 @@ function gatherInfo(loans){
         createAddCardBox()
         }
 }
-
-// debug(gatherInfo)
 
 function roundCents(input){
     return Math.round(100 *(input))/100;
@@ -39,9 +36,17 @@ function createCards(loan){
         newCard.setAttribute("id", "area" + children)
         newCard.setAttribute("class", "boxes editable")
         newCard.setAttribute("onClick", "replyClick()")
-        newCard.appendChild(document.createTextNode(`${loan.name}`))
-        newCard.appendChild(document.createTextNode(`Payment: ${loan.payment}`))
         grid.appendChild(newCard)
+        var newDiv = document.getElementById(`area${children}`)
+        var newH4 = document.createElement(`h4`)
+        newH4.appendChild(document.createTextNode(`${loan.name}`))
+        newDiv.appendChild(newH4)
+        var newH3 = document.createElement(`h3`)
+        newH3.appendChild(document.createTextNode(`$${loan.payment}`))
+        newDiv.appendChild(newH3)
+        // newCard.appendChild(document.createTextNode(`${loan.name}`))
+        // newCard.appendChild(document.createTextNode(`Payment: ${loan.payment}`))
+        
 }
 
 function createAddCardBox(){
@@ -95,7 +100,6 @@ function calculateSimpleInt(card){
 
 function findInterestPaid(card){
     var result = roundCents(calculateSimpleInt(card).paid - card.balance)
-    console.log("findIntPaid: " + card.name + ": " + result)
     return result
 }
 
@@ -104,7 +108,6 @@ function addEmUp(loans){
     var cardStartingBalance = []
     var totals = []
     if (loans.length > 0 ){
-        console.log()
         for (let i=0; i < loans.length; i++){
             var card = loans[i]
             var cardPaid = calculateSimpleInt(card)
@@ -163,7 +166,6 @@ function postTotalPaid(totalPaid){
 }
   
 $(function() {
-    console.log('App loaded! Waiting for submit!');
     gatherInfo(loans)
     $('input.currency').currencyInput();
     $('input.percent').percentInput();

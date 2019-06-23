@@ -5,9 +5,10 @@ function replyClick(){
     return lastChar
 }
 
-function existingCardClick(){
+function existingCardClick(num){
     document.getElementById("popup-form").reset();
-    placement = replyClick()-1
+    placement = num -1
+    // placement = replyClick()-1
     var whichCard = loans[placement]
     var cardName = document.getElementById("new-card-name")
     var cardPay = document.getElementById("new-card-pay")
@@ -32,7 +33,6 @@ function existingCardClick(){
     cardBal.addEventListener("keyup", timeFrame)
 
     $("#popup-form").submit(event => {
-        console.log("EDIT form submit")
         event.preventDefault();
         event.stopImmediatePropagation();
         var text = $('#add-title').text();
@@ -73,6 +73,7 @@ function clearPopup(deleteCard){
 }
 
 function stopListening(){
+    $('#grid').off()
     $("#popup-form").off()
     $("#delete-card").off()
     $("#popup-close").off()
@@ -82,7 +83,15 @@ function stopListening(){
 }
 
 function watchForEdits(){
-    $('.editable').click(function(){
-        existingCardClick(loans)
+    $('#grid').on("click", ".editable", function(){
+        var clicked = this.id
+        var lastChar = clicked[clicked.length -1]
+        existingCardClick(lastChar)
     });
 }
+
+// function watchForEdits(){
+//     $('.editable').click(function(){
+//         existingCardClick(loans)
+//     });
+// }
