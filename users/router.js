@@ -21,7 +21,7 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'password', 'firstName', 'lastName'];
+  const stringFields = ['username', 'password'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -116,13 +116,6 @@ router.post('/', jsonParser, (req, res) => {
       }
       res.status(500).json({code: 500, message: 'Internal server error'});
     });
-});
-
-router.get('/', (req, res) => {
-  return User.find()
-  //DON'T FORGET TO REMOVE BEFORE PUBLIC RELEASE
-    .then(users => res.json(users.map(user => user.serialize())))
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
 module.exports = {router};

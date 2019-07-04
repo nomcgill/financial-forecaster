@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 
+const {userLoans} = require('./models');
+
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
@@ -26,6 +28,53 @@ app.use(function (req, res, next) {
   next();
 });
 
+//GET list of all user statistics
+app.get('/user-loans', (req, res) => {
+  res.json(userLoans.get());
+});
+
+//POST a new username with any local loans included
+app.post('/user-loans', jsonParser, (req, res) => {
+  const requiredFields = ['username', 'loans'];
+  for (let i=0; i<requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+  const item = userLoans.create(req.body.id, req.body.username, req.body.loans);
+  res.status(201).json(item);
+});
+
+//UPDATE a user's saved loans.
+app.put('/user-loans/:id', (req, res) => {
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    res.status(400).json({
+      error: 'Request path id and request body id values must match'
+    });
+  }
+
+  const updated = {};
+  const updateableFields = ['loans'];
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      updated[field] = req.body[field];
+    }
+  });
+
+  userLoans
+    .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+    .then(updatedLoans => res.status(200).json({
+      id: updatedLoans.id,
+      username: updatedLoans.username,
+	    loans: updatedLoans.loans
+    }))
+    .catch(err => res.status(500).json({ message: err }));
+});
+
+//PASSPORT, USERNAME, PASSWORD BELOW
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
@@ -36,7 +85,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 
 app.get('/api/protected', jwtAuth, (req, res) => {
   return res.json({
-    data: 'tree-bark'
+    data: 'wifi-burgers-and-fries'
   });
 });
 
