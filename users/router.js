@@ -82,9 +82,7 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  let {username, password, firstName = '', lastName = ''} = req.body;
-  firstName = firstName.trim();
-  lastName = lastName.trim();
+  let {username, password} = req.body;
 
   return User.find({username})
     .count()
@@ -102,9 +100,7 @@ router.post('/', jsonParser, (req, res) => {
     .then(hash => {
       return User.create({
         username,
-        password: hash,
-        firstName,
-        lastName
+        password: hash
       });
     })
     .then(user => {
