@@ -171,4 +171,5 @@ $(function() {
     $('input.percent').percentInput();
     watchForAdd()
     watchForEdits()
+    watchForSave()
 });

@@ -12,7 +12,7 @@ const userLoans = {
     const item = {
         id: uuid.v4(),
         username: userLoans.username,
-        loans: userLoans.username
+        loans: userLoans.loans
     };
     this.items[item.id] = item;
     return item;
