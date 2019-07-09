@@ -15,30 +15,16 @@ function clickSave(loggedIn){
         return
     }
     //check Token, then successful PUT request, updating database loans of that username
-    console.log("successful save!")
-
 } 
 
 function handleProfileClick(){
-    console.log("handleProfileClick run")
     var loadedUser = document.getElementById("#profile-click-user")
-    if (loadedUser === false){
+    if (loadedUser == null){
         createProfilePopup()
     }
-    if (loadedUser === true){
+    if (loadedUser !== null){
         createLogOutPopUp(loadedUser)
     }
-}
-
-function createProfilePopup(){
-    var userInput = document.getElementById("user-input").value
-    //display username and password input fields above 2 buttons:
-    $('#create-profile').click(function(){
-        handleCreateProfile(userInput)
-    })
-    $('#log-in').click(function(){
-        handleLogIn(userInput)
-    })
 }
 
 function handleCreateProfile(userInput){
@@ -64,14 +50,85 @@ function handleLogIn(userInput){
     })
 }
 
-function createLogOutPopUp(loadedUser){
-    //display loadedUser, and give single button option to log out.
-    $('#log-out').click(function(){
-        logOut()
-    })
-}
-
 function logOut(){
     alert("You've been logged out.")
+//Revoke passport token
     window.location.reload(true)
+}
+
+function createProfilePopup(){
+    $("#list-builder").fadeIn("fast", () => {
+        $("#popup-box").fadeIn("fast", () => {});
+    });
+    document.getElementById("popup-form").reset();
+    // var userInput = document.getElementById("user-input").value
+    $(`form input`).hide()
+    $(`.currency-symbol`).replaceWith(
+        `<span class="currency-symbol"></span>`
+    )
+    $(`.percent-symbol`).replaceWith(
+        `<span class="percent-symbol"></span>`
+    )
+    var logIn = document.getElementById("log-in")
+    $(`#new-card-save`).replaceWith(`<button type="button" id="new-card-save" name="Create Profile">Create Profile</button>`)
+    $(`#add-title`).replaceWith(`<h2 id="add-title">Create Profile or Log In</h2>`)
+    logIn.classList.remove("hidden")
+    $("#new-card-save").click(function(){
+        handleCreateProfile(userInput)
+        resetBox(logIn)
+    })
+
+    $("#log-in").click(function(){
+        handleLogIn(userInput)
+        resetBox(logIn)
+    })
+   
+    $("#popup-close").click(() => {
+        resetBox(logIn)
+    });             
+    $("#new-card-cancel").click(() => {
+        resetBox(logIn)
+    });
+}
+
+function createLogOutPopUp(){
+    $("#list-builder").fadeIn("fast", () => {
+        $("#popup-box").fadeIn("fast", () => {});
+    });
+    document.getElementById("popup-form").reset();
+    // var userInput = document.getElementById("user-input").value
+    $(`form input`).hide()
+    $(`.currency-symbol`).replaceWith(
+        `<span class="currency-symbol"></span>`
+        )
+        $(`.percent-symbol`).replaceWith(
+            `<span class="percent-symbol"></span>`
+            )
+            $(`#new-card-save`).replaceWith(`<button type="button" id="new-card-save" name="Log Out">Log Out?</button>`)
+            $(`#add-title`).replaceWith(`<h2 id="add-title">Log Out?</h2>`)
+            
+            $("#new-card-save").click(function(){
+                logOut()
+            })
+            
+            $("#log-in").click(function(){
+                handleLogIn(userInput)
+        resetBox()
+    })
+   
+    $("#popup-close").click(() => {
+        resetBox()
+    });             
+    $("#new-card-cancel").click(() => {
+        resetBox()
+    });
+}
+
+function resetBox(logIn){
+    $(`form input`).show()
+    $(`.currency-symbol`).replaceWith(
+        `<span class="currency-symbol">$ </span>`)
+    $(`.percent-symbol`).replaceWith(
+        `<span class="percent-symbol">% </span>`)
+    clearPopup(logIn)
 }

@@ -28,6 +28,10 @@ header {
   font-family: 'Roboto Slab', serif;
 }
 
+button {
+  cursor: pointer;
+}
+
 header h3 {
   margin-bottom: 12px;
 }

@@ -68,7 +68,8 @@ function clearPopup(deleteCard){
     $("#list-builder, #popup-box").hide();
     $(`#new-card-save`).replaceWith(`<button type="submit" id="new-card-save" name="Add-Hurdle">Add Hurdle</button>`)
     $(`#add-title`).replaceWith(`<h2 id="add-title">Add New Debt Hurdle</h2>`)                                                                                     
-    deleteCard.classList.add("hidden")
+    if (deleteCard !== undefined){
+        deleteCard.classList.add("hidden")}
     stopListening()
 }
 
