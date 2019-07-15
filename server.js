@@ -37,9 +37,13 @@ app.get('/user-loans', (req, res) => {
   res.json(userloans.get());
 });
 
+//GET single object by ID
+app.get(`/user-loans/:id`, (req, res) => {
+  res.json(userloans.getOne(req.params.id))
+})
+
 //POST a new username with any local loans included
 app.post('/user-loans', jsonParser, (req, res) => {
-  // console.log(req.body)
   const requiredFields = ['username', 'loans'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -55,8 +59,6 @@ app.post('/user-loans', jsonParser, (req, res) => {
 
 //UPDATE a user's saved loans.
 app.put('/user-loans/:id', jsonParser, (req, res) => {
-  console.log("PUT request for:")
-  console.log(req.body)
   if (!(req.params.id === req.body.id)) {
     res.status(400).send({
       error: 'Request path id and request body id values must match'
@@ -64,38 +66,14 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
     return
   }
 
-  // if (!(req.body.username === req.body.id)) {
-  //   res.status(400).json({
-  //     error: 'Request path id and request body id values must match'
-  //   });
-  // }
-
   userloans.update({
     id: req.params.id,
+    username: req.body.username,
     loans: req.body.loans
   });
+
   res.status(204).end();
 
-
-
-  // const updated = {};
-  // const updateableFields = ['loans'];
-  // updateableFields.forEach(field => {
-  //   if (field in req.body) {
-  //     updated[field] = req.body[field];
-  //   }
-  // });
-
-  // userloans
-  // database = 
-  //   .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-  //   .then(updatedLoans => res.status(200).json({
-  //     id: updatedLoans.id,
-  //     username: updatedLoans.username,
-	//     loans: updatedLoans.loans
-  //   }))
-  //   .catch(err => res.status(500).json({ message: err }));
-  return
 });
 
 //PASSPORT, USERNAME, PASSWORD BELOW
