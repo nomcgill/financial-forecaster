@@ -91,9 +91,9 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
 //   });
 // });
 
-// app.use('*', (req, res) => {
-//   return res.status(404).json({ message: 'Not Found' });
-// });
+app.use('*', (req, res) => {
+  return res.status(404).json({ message: 'Not Found' });
+});
 
 let server;
 
