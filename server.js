@@ -39,6 +39,9 @@ app.get('/user-loans', (req, res) => {
 
 //GET single object by ID
 app.get(`/user-loans/:id`, (req, res) => {
+  // connect to database
+  
+  // retrieve loan from database by id
   res.json(userloans.getOne(req.params.id))
 })
 
