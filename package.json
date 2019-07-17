@@ -2,9 +2,9 @@
   "name": "financial-forecaster",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
-    "start": "index.html && node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
