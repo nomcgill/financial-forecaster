@@ -4,12 +4,14 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const path = require('path')
 // const passport = require('passport');
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 const {userloans} = require('./models');
+
 
 // const { router: usersRouter } = require('./users');
 // const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
@@ -19,8 +21,11 @@ mongoose.Promise = global.Promise;
 const { PORT, DATABASE_URL } = require('./config');
 
 const app = express();
+app.use(express.static("public"));
 
+// app.use(express.static(__dirname + "../public"));
 app.use(morgan('common'));
+// app.use(express.static(__dirname + "/../public"));
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -31,6 +36,26 @@ app.use(function (req, res, next) {
   }
   next();
 });
+
+// var htmlPath = path.join(__dirname, 'public', 'index.html');
+
+
+// app.get('/', function(req, res){
+//   res.sendFile(
+//     path.join(__dirname, './public', 'index.html'),
+//     path.join(__dirname, './public', 'addNewCard.css'),
+//     path.join(__dirname, './public', 'profile-handling.js'),
+//     path.join(__dirname, './public', 'script.js'),
+//     path.join(__dirname, './public', 'addpopup.js'),
+//     path.join(__dirname, './public', 'editCard.js')
+//   )
+// });
+
+// app.get('/stylesheet.css', function(req, res){
+//   res.sendFile(
+//     path.join(__dirname, './public', 'stylesheet.css')
+//   )
+// });
 
 //GET list of all user statistics
 app.get('/user-loans', (req, res) => {
@@ -136,5 +161,6 @@ function closeServer() {
 if (require.main === module) {
   runServer().catch(err => console.error(err));
 }
+
 
 module.exports = { app, runServer, closeServer };

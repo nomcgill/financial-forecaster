@@ -1,8 +1,8 @@
 "use strict";
 
 // import { link } from "fs";
-// var loans = []
-var loans = mockData
+var loans = []
+// var loans = mockData
 // var loans = exampleLoans
 
 function gatherInfo(loans){

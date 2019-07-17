@@ -2,7 +2,7 @@
   "name": "financial-forecaster",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
