@@ -62,7 +62,8 @@ function createProfilePopup(){
     });
     document.getElementById("popup-form").reset();
     // var userInput = document.getElementById("user-input").value
-    $(`form input`).hide()
+    $(`.loan-card`).hide()
+    $(`.profile-card`).show()
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol"></span>`
     )
@@ -125,7 +126,8 @@ function createLogOutPopUp(){
 }
 
 function resetBox(logIn){
-    $(`form input`).show()
+    $(`.loan-card`).show()
+    $(`.profile-card`).hide()
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol">$ </span>`)
     $(`.percent-symbol`).replaceWith(
