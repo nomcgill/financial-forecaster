@@ -1,5 +1,13 @@
 
 const uuid = require('uuid');
+const express = require('express');
+const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+const { PORT, DATABASE_URL } = require('./config');
+const mongo = require('mongodb').MongoClient
+const url = `${DATABASE_URL}`
 
 function StorageException(message) {
   this.message = message;
@@ -8,20 +16,40 @@ function StorageException(message) {
 
 const userloans = {
   create: function(name, loans) {
-    database = Object.keys(this.items)
     const user = {
-        id: uuid.v4(),
-        username: name,
-        loans: [loans]
+      username: name,
+      loans: [loans]
     };
-    console.log("database: " + database)
-    if (database.includes(`${user.username}`)){
-      console.log("Username: " + user.username + " already exists.")
-      return {error: 'Username already exists.'}
-    }
-    this.items[user.username] = user;
-    console.log("Creating username: " + user.username)
-    return user;
+    return user
+    // MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, (err, client) => {    
+    //   if (err) {
+    //     console.error(err)
+    //     return
+    //   }
+    //   const db = client.db('financial-forecaster')
+    //   const collection = db.collection('userloans')
+    //   collection.find().toArray((err, items) => {
+    //     console.log(items)
+    //     if (items.username[name]){
+    //       return res.status(409).json({ message: `Username ${name} is already taken.` });
+    //     }
+    //     this.items[user.username] = user;
+    //     console.log("Creating username: " + user.username)
+    //     return user;
+    //   })
+    //   assert.equal(null, err);
+    //   client.close();
+    // })
+    // console.log("database: " + database)
+    // if (database.includes(`${user.username}`)){
+      //   console.log("Username: " + user.username + " already exists.")
+      //   return {error: 'Username already exists.'}
+      // }
+      // try {
+        //   db.financial-forecaster.userloans.insertOne( {user} );
+        // } catch (e) {
+          //   print (e);
+          // }
   },
   get: function() {
     database = Object.keys(this.items)
