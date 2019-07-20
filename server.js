@@ -57,28 +57,47 @@ app.get('/user-loans', (req, res) => {
     assert.equal(null, err);
     client.close();
   })
-  // res.json(userloans.get());
 });
 
 //GET single object by ID
 app.get(`/user-loans/:id`, (req, res) => {
-  MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, (err, client) => {    
-    if (err) {
-      console.error(err)
-      return
+  if (req.params.id.toString().length !== 24 ){
+    res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
+  }
+  try {
+    MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
+      assert.equal(null, err);
+      const db = client.db('financial-forecaster')
+      const collection = db.collection('userloans')
+      var ObjectId = require('mongodb').ObjectID;
+  
+      var myPromise = () => {
+        return new Promise((resolve, reject) => {
+          collection
+          .findOne({"_id": new ObjectId(req.params.id)}, function(err, data) {
+              if (!(data)){
+                reject(err)
+                res.json({ message: `ID does not match any doc in database.` }).status(409).send()
+                return false
+                }
+              else {resolve}
+              err
+                ? reject(err)
+                : resolve(
+                  res.json({data}).status(200).send()
+                );
+            });
+        }).catch(e => {
+          return false
+       })            
+      }
+      await myPromise() 
+      client.close();
+    });
+    } catch (e) {
+      next(e)
     }
-    const db = client.db('financial-forecaster')
-    const collection = db.collection('userloans')
-    collection.findOne({id: req.params.id}, (err, item) => {
-      console.log(item)
-      res.json(item)
-    })
-    assert.equal(null, err);
-    client.close();
-  })
-  // retrieve loan from database by id
-  // res.json(userloans.getOne(req.params.id))
-})
+  });
 
 //POST a new username with any local loans included
 app.post('/user-loans', jsonParser, async (req, res, next) => {
@@ -110,26 +129,10 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
               );
           });
       }).catch(e => {
-        console.log(e)
         return false
      })            
     }
-    // var myPromise2 = () => {
-    //   return new Promise((resolve, reject) => {
-    //     collection
-    //     .insertOne(userloans.create(req.body.username, req.body.loans), (err, data) => {
-    //         err
-    //           ? reject(err)
-    //           : resolve();
-    //       });
-    //   });
-    // }
     await myPromise() 
-    // var result2 = await myPromise2()
-    // if (result !== false){
-      // console.log("OMG IT'S HAPPENING")
-      // res.json(result);
-    // }
     client.close();
   });
   } catch (e) {
@@ -137,125 +140,62 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
   }
 });
 
-// app.post('/user-loans', jsonParser, (req, res) => {
-//     MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, (err, client) => {    
-//       if (err) {
-//         console.error(err)
-//         return
-//       }
-//       const db = client.db('financial-forecaster')
-//       const collection = db.collection('userloans')
-
-//       collection.findOne({username: req.body.username}, function(err, user){
-//         if(err) {
-//           console.log(err);
-//         }
-//         var message;
-//         if(user) {
-//           console.log(user)
-//             message = "user exists";
-//             console.log(message)
-//             res.json({message: message}).status(404).send()
-//             return
-//         } else {
-//             message= "New user: adding user to database.";
-//             console.log(message)
-//         }
-//       });
-//       console.log("heard? Ready to proceed.");
-//       collection.insertOne(userloans.create(req.body.username, req.body.loans, req, res), (err, item) => {
-//         console.log(`${req.body.username} successfully added to database!`)
-//         res.status(204).json({message: `${req.body.username} successfully added to database!`});
-//       })
-//       assert.equal(null, err);
-//       client.close();
-//     })
-//   }
-// );
-      
-      // collection.find().toArray((err, items) => {
-      //   console.log(items)
-      //   function mapping(input){
-      //     return input.username
-      //   }
-      //   const database = items.map(mapping)
-      //   console.log(database)
-      //   for (let i=0; i <= database.length; i++){
-      //     if (database[i] == req.body.username){
-      //       return res.status(409).json({ message: `Username ${req.body.username} is already taken.` });
-      //     }
-      //   }
-      //   collection.insertOne(userloans.create(req.body.username, req.body.loans), (err, item) => {
-      //     console.log(`${req.body.username} successfully added to database!`)
-      //     res.status(204).json({message: `${req.body.username} successfully added to database!`});
-      //   })
-      // })
-      // assert.equal(null, err);
-      // client.close();
-  // function postIt(){
-  //   MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, (err, client) => {    
-  //     if (err) {
-  //       console.error(err)
-  //       return
-  //     }
-  //     const db = client.db('financial-forecaster')
-  //     const collection = db.collection('userloans')
-  //     assert.equal(null, err);
-  //     client.close();
-  //   })
-  // }
-  // checkExisting()
-  // postIt()
-
-
-  // const requiredFields = ['username', 'loans'];
-  // for (let i=0; i<requiredFields.length; i++) {
-  //   const field = requiredFields[i];
-  //   if (!(field in req.body)) {
-  //     const message = `Missing \`${field}\` in request body`
-  //     console.error(message);
-  //     return res.status(400).send(message);
-  //   }
-  // }
-  // const item = userloans.create(req.body.username, req.body.loans);
-  // res.status(201).json(
-  //   collection.insertOne({item}, (err, result) => {
-  //   })
-  // )
-
 //UPDATE a user's saved loans.
 app.put('/user-loans/:id', jsonParser, (req, res) => {
+  if (req.params.id.toString().length !== 24 ){
+    res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
+  }
   if (!(req.params.id === req.body.id)) {
     res.status(400).send({
       error: 'Request path id and request body id values must match'
     })
     return
   }
-
-  userloans.update({
-    id: req.params.id,
-    username: req.body.username,
-    loans: req.body.loans
-  });
-
-  res.status(204).end();
-
-});
-
-//PASSPORT, USERNAME, PASSWORD BELOW
-// passport.use(localStrategy);
-// passport.use(jwtStrategy);
-
-// app.use('/api/users/', usersRouter);
-// app.use('/api/auth/', authRouter);
-
-// const jwtAuth = passport.authenticate('jwt', { session: false });
-
-// app.get('/api/protected', jwtAuth, (req, res) => {
-//   return res.json({
-//     data: 'wifi-burgers-and-fries'
-//   });
-// });
+  try {
+    MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
+      assert.equal(null, err);
+      const db = client.db('financial-forecaster')
+      const collection = db.collection('userloans')
+  
+      var myPromise = () => {
+        return new Promise((resolve, reject) => {
+          collection
+           .find({username: req.body.username})
+           .limit(1)
+           .toArray(function(err, data) {
+             console.log(data)
+             console.log(err)
+              if(data.length > 0){
+                if (data[0]._id.toString() !== req.params.id){
+                  reject(err)
+                  res.json({ message: `Username ${req.body.username} does not match database ID.` }).status(409).send()
+                  return false
+                }
+                else {resolve}
+              }
+              else{
+                reject(err)
+                res.json({ message: `Username ${req.body.username} not found in database.` }).status(409).send()
+                return false
+              }
+              err
+              ? reject(err)
+              : resolve(
+                  collection.updateOne({"username": req.body.username}, { $set: { "loans" : req.body.loans } }),
+                  res.status(204).send()
+                );
+              });
+          }).catch(e => {
+            return false
+         })            
+        }
+        await myPromise() 
+        client.close();
+      });
+      } catch (e) {
+        next(e)
+      }
+    });
 
 app.use('*', (req, res) => {
   return res.status(404).json({ message: 'Not Found' });
