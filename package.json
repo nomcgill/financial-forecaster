@@ -1,7 +1,8 @@
 {
   "name": "financial-forecaster",
   "version": "1.0.0",
-  "description": "",
+  "description": "Debt organizing tool for visualizing and budgeting a repayment plan.",
+  "repository": "https://github.com/nomcgill/financial-forecaster",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

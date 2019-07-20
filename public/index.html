@@ -30,13 +30,12 @@
         </div>
         <div id="list-builder"></div>
         <div id="popup-box">
-            <img src="https://cdn3.iconfinder.com/data/icons/web-round-corner/614/278_-_Cancel-512.png" id="popup-close" />
+            <img src="https://cdn3.iconfinder.com/data/icons/web-round-corner/614/278_-_Cancel-512.png" id="popup-close" alt="Close Loan Popup"/>
             <div id="popup-box-content">
               <h2 id="add-title">Add New Debt Hurdle</h2>
               <form id="popup-form" name="addNewCard">
                 <input type="hidden" name="list" value="key_list_etc" />
-                <input type="text" class="input-fields profile-card" required id="username-input" maxlength="12" name="username" placeholder="Username" style="display: none;" />
-                <input type="text" class="input-fields profile-card" required id="password-input" maxlength="12" name="password" placeholder="Password" style="display: none;" />
+                <input type="text" class="input-fields profile-card" required id="username-input" maxlength="12" name="username" placeholder="Username" onfocus="this.placeholder = ''" style="display: none;" />
                 <input type="text" class="input-fields loan-card" required id="new-card-name" maxlength="15" name="name" placeholder="Name" autofocus/>
                 <input type="number" required step="any" id="new-card-balance" class="currency input-fields loan-card" min="0.01" max="2000000.00" name="balance" placeholder="Balance" />
                 <input type="number" required step="any" id="new-card-apr" class="percent input-fields loan-card" min="0.00" max="200.00" name="APR" placeholder="APR" />

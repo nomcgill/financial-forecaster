@@ -88,6 +88,10 @@ input#new-card-apr {
     margin-left: 3px;
 }
 
+#username-input{
+    text-align: center;
+}
+
 #longevity {
     font-size: 1.1em;
     margin-top: 8px;

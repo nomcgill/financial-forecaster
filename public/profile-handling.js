@@ -14,7 +14,7 @@ function clickSave(loggedIn){
         alert("You must be logged in to save hurdles.")
         return
     }
-    //check Token, then successful PUT request, updating database loans of that username
+    //check userID, then successful PUT request, updating database loans of that username
 } 
 
 function handleProfileClick(){
