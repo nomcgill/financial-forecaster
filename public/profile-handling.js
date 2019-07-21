@@ -1,3 +1,4 @@
+var herokuAPIEndpoint = "https://financial-forecaster.herokuapp.com/user-loans/"
 
 function watchForSave(){
     $("nav").click(function(){

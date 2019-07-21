@@ -70,6 +70,46 @@ app.get(`/user-loans/`, (req, res) => {
   }
 });
 
+//GET single object by username
+app.get('/find', jsonParser, async (req, res, next) => {
+  try {
+  MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
+    assert.equal(null, err);
+    const db = client.db('financial-forecaster')
+    const collection = db.collection('userloans')
+
+    var myPromise = () => {
+      return new Promise((resolve, reject) => {
+        collection
+          .find({username: req.body.username})
+          .limit(1)
+          .toArray(function(err, data) {
+            if (!(data)){
+              reject(err)
+              res.json({ message: `Username ${req.body.username} not found.` }).status(409).send()
+              return false
+              }
+            else {resolve}
+            console.log(err);
+            console.log(data);
+            err
+              ? reject(err)
+              : resolve(
+                res.json({ data }).status(201).send()
+              );
+          });
+      }).catch(e => {
+        return false
+     })            
+    }
+    await myPromise() 
+    client.close();
+  });
+  } catch (e) {
+    next(e)
+  }
+});
+
 //GET single object by ID
 app.get(`/user-loans/:id`, (req, res) => {
   if (req.params.id.toString().length !== 24 ){
