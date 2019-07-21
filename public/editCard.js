@@ -71,6 +71,7 @@ function clearPopup(deleteCard){
     if (deleteCard !== undefined){
         deleteCard.classList.add("hidden")}
     stopListening()
+    reassessNavBar()
 }
 
 function stopListening(){
@@ -81,6 +82,7 @@ function stopListening(){
     $("#new-card-cancel").off()
     watchForEdits()
     watchForAdd()
+    watchForSave()
 }
 
 function watchForEdits(){

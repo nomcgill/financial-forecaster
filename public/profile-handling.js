@@ -5,7 +5,6 @@ function watchForSave(){
         handleProfileClick()
     })
     $("#save-profile").click(function(){
-
         clickSave(loggedIn)
     })
 }
@@ -54,7 +53,8 @@ function handleLogIn(){
     })
     .then(function(){
         loggedIn = true
-        console.log(`Now logged in as ${Bulma}`)
+        resetBox()
+        console.log(`Now logged in as ${currentUser.username}`)
         reassessSituation()
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
@@ -115,19 +115,18 @@ function createLogOutPopUp(){
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol"></span>`
         )
-        $(`.percent-symbol`).replaceWith(
-            `<span class="percent-symbol"></span>`
-            )
-            $(`#new-card-save`).replaceWith(`<button type="button" id="new-card-save" name="Log Out">Log Out?</button>`)
-            $(`#add-title`).replaceWith(`<h2 id="add-title">Log Out?</h2>`)
-            
-            $("#new-card-save").click(function(){
-                logOut()
-            })
-            
-            $("#log-in").click(function(){
-                handleLogIn(userInput)
-        resetBox()
+    $(`.percent-symbol`).replaceWith(
+        `<span class="percent-symbol"></span>`
+        )
+    $(`#new-card-save`).replaceWith(`<button type="button" id="new-card-save" name="Log Out">Log Out?</button>`)
+    $(`#add-title`).replaceWith(`<h2 id="add-title">Log Out?</h2>`)
+    
+    $("#new-card-save").click(function(){
+        logOut()
+    })
+    
+    $("#log-in").click(function(){
+        handleLogIn(userInput)
     })
    
     $("#popup-close").click(() => {
@@ -138,7 +137,7 @@ function createLogOutPopUp(){
     });
 }
 
-function resetBox(logIn){
+function resetBox(){
     $(`.loan-card`).show()
     $(`#username-input`).prop('required',false);
     $(`.profile-card`).hide()
@@ -146,9 +145,15 @@ function resetBox(logIn){
         `<span class="currency-symbol">$ </span>`)
     $(`.percent-symbol`).replaceWith(
         `<span class="percent-symbol">% </span>`)
-    clearPopup(logIn)
+    clearPopup()
 }
 
-function reassessSituation(){
+function reassessNavBar(){
     console.log("Let's reassess who's logged in and the loan situation.")
+    if (loggedIn === true){
+        $(`nav`).replaceWith(`<nav>Profile: <span id="profile">${currentUser.username}</span></nav>`)
+    }
+    else {
+        $(`nav`).replaceWith(`<nav>Log In to Save Hurdles</nav>`)
+    }
 }
