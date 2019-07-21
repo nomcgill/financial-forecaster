@@ -43,7 +43,6 @@ app.use(function (req, res, next) {
 
 //GET list of entire userloans collection
 app.get('/user-loans', (req, res) => {
-  console.log("GET everything request")
   MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, (err, client) => {    
     if (err) {
       console.error(err)
@@ -62,7 +61,6 @@ app.get('/user-loans', (req, res) => {
 
 //GET single object by ID
 app.get(`/user-loans/:id`, (req, res) => {
-  console.log("GET by id request")
   if (req.params.id.toString().length !== 24 ){
     res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
   }
@@ -103,7 +101,6 @@ app.get(`/user-loans/:id`, (req, res) => {
 
 //POST a new username with any local loans included
 app.post('/user-loans', jsonParser, async (req, res, next) => {
-  console.log("POST request")
   try {
   MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
     assert.equal(null, err);
@@ -145,7 +142,6 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
 
 //UPDATE a user's saved loans.
 app.put('/user-loans/:id', jsonParser, (req, res) => {
-  console.log("PUT request")
   if (req.params.id.toString().length !== 24 ){
     res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
   }
@@ -240,10 +236,8 @@ function closeServer() {
   });
 }
 
-// if (require.main === module) {
-//   runServer().catch(err => console.error(err));
-// }
-console.log("being run?")
-runServer()
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+}
 
 module.exports = { app, runServer, closeServer };
