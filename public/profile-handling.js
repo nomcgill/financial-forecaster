@@ -52,10 +52,15 @@ function handleLogIn(){
         currentUser = userObject
     })
     .then(function(){
+        if (currentUser.username !== undefined){
         loggedIn = true
         resetBox()
         console.log(`Now logged in as ${currentUser.username}`)
-        reassessSituation()
+        reassessNavBar()
+        }
+        else {
+            alert("username is still undefined! (for some reason)")
+        }
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
