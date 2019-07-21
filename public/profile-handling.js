@@ -1,10 +1,9 @@
-var herokuAPIEndpoint = "https://financial-forecaster.herokuapp.com/user-loans/"
+var herokuAPIEndpoint = "https://financial-forecaster.herokuapp.com/"
 
 function watchForSave(){
     $("nav").click(function(){
         handleProfileClick()
     })
-    var loggedIn = false
     $("#save-profile").click(function(){
         clickSave(loggedIn)
     })
@@ -19,11 +18,10 @@ function clickSave(loggedIn){
 } 
 
 function handleProfileClick(){
-    var loadedUser = document.getElementById("#profile-click-user")
-    if (loadedUser == null){
+    if (currentUser.username == false){
         createProfilePopup()
     }
-    if (loadedUser !== null){
+    if (currentUser.username){
         createLogOutPopUp(loadedUser)
     }
 }
@@ -38,17 +36,24 @@ function handleCreateProfile(userInput){
 
 function handleLogIn(userInput){
     console.log("handleLogIn run")
-    //check userInput and password creditentials against database
-    //Deny access with alert, or generate 7-day Token!
-    //GET username from database, fetching loans array
-    //THEN update local loans array with fetched loans array.
+    fetch (herokuAPIEndpoint + `find/` + `?username=` + userInput)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error (response.statusText);
+    })
+    .then (userObject => {
+        currentUser = userObject
+    })
     .then(function(){
-        var loggedIn = true
+        loggedIn = true
         $("#save-profile").off("click");
         $("#save-profile").click(function(){
         clickSave(loggedIn)
         })
     })
+    .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
 
 function logOut(){
@@ -62,9 +67,11 @@ function createProfilePopup(){
         $("#popup-box").fadeIn("fast", () => {});
     });
     document.getElementById("popup-form").reset();
-    // var userInput = document.getElementById("user-input").value
+    var userInput = document.getElementById("username-input").value
     $(`.loan-card`).hide()
+    $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`.profile-card`).show()
+    $(`#username-input`).prop('required',true);
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol"></span>`
     )
@@ -98,7 +105,8 @@ function createLogOutPopUp(){
         $("#popup-box").fadeIn("fast", () => {});
     });
     document.getElementById("popup-form").reset();
-    // var userInput = document.getElementById("user-input").value
+    var userInput = document.getElementById("username-input").value
+    $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`form input`).hide()
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol"></span>`
@@ -128,6 +136,7 @@ function createLogOutPopUp(){
 
 function resetBox(logIn){
     $(`.loan-card`).show()
+    $(`#username-input`).prop('required',false);
     $(`.profile-card`).hide()
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol">$ </span>`)

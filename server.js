@@ -81,12 +81,12 @@ app.get('/find', jsonParser, async (req, res, next) => {
     var myPromise = () => {
       return new Promise((resolve, reject) => {
         collection
-          .find({username: req.body.username})
+          .find({username: req.query.username})
           .limit(1)
           .toArray(function(err, data) {
             if (!(data)){
               reject(err)
-              res.json({ message: `Username ${req.body.username} not found.` }).status(409).send()
+              res.json({ message: `Username ${req.params.username} not found.` }).status(409).send()
               return false
               }
             else {resolve}

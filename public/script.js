@@ -1,7 +1,15 @@
 "use strict";
 
 // import { link } from "fs";
-var loans = []
+var loggedIn = false
+
+var currentUser = {
+    _id: false,
+    username: false,
+    loans: []
+}
+
+const loans = currentUser.loans
 // var loans = mockData
 // var loans = exampleLoans
 
