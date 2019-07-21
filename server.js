@@ -25,7 +25,6 @@ mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
 const mongo = require('mongodb').MongoClient
-const url = `${DATABASE_URL}`
 
 const app = express();
 app.use(express.static("public"));
