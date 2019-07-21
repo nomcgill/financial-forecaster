@@ -93,7 +93,6 @@ function createProfilePopup(){
 
     $("#log-in").click(function(){
         handleLogIn()
-        resetBox(logIn)
     })
    
     $("#popup-close").click(() => {

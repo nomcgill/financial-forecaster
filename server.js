@@ -89,7 +89,6 @@ app.get('/find', jsonParser, async (req, res, next) => {
               res.json({ message: `Username ${req.params.username} not found.` }).status(409).send()
               return false
               }
-            else {resolve}
             console.log(err);
             console.log(data);
             err
