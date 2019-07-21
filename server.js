@@ -42,21 +42,33 @@ app.use(function (req, res, next) {
 });
 
 //GET list of entire userloans collection
-app.get('/user-loans', (req, res) => {
-  MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, (err, client) => {    
-    if (err) {
-      console.error(err)
-      return
-    }
-    const db = client.db('financial-forecaster')
-    const collection = db.collection('userloans')
-    collection.find().toArray((err, items) => {
-      console.log(items)
-      res.json(items)
-    })
-    assert.equal(null, err);
-    client.close();
-  })
+app.get(`/user-loans/`, (req, res) => {
+  try {
+    MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
+      assert.equal(null, err);
+      const db = client.db('financial-forecaster')
+      const collection = db.collection('userloans')
+  
+      var myPromise = () => {
+        return new Promise((resolve, reject) => {
+          collection
+          .find().toArray((err, items) => {
+              err
+                ? reject(err)
+                : resolve(
+                  res.json({items}).status(200).send()
+                );
+            });
+        }).catch(e => {
+          return false
+        })            
+      }
+      await myPromise() 
+      client.close();
+    });
+  } catch (e) {
+  next(e)
+  }
 });
 
 //GET single object by ID
