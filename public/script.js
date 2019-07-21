@@ -3,7 +3,7 @@
 // import { link } from "fs";
 var loggedIn = false
 
-var currentUser = {
+let currentUser = {
     _id: false,
     username: false,
     loans: []

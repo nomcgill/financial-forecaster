@@ -5,6 +5,7 @@ function watchForSave(){
         handleProfileClick()
     })
     $("#save-profile").click(function(){
+
         clickSave(loggedIn)
     })
 }
@@ -28,15 +29,20 @@ function handleProfileClick(){
 
 function handleCreateProfile(userInput){
     console.log("handleCreateProfile run")
+    var userInput = document.getElementById("username-input").value
+    console.log(userInput)
     //Check for existing username. If none, POST new username & pass to database. username : userInput, loans : []
     .then(
         handleLogIn(userInput)
     )
 }
 
-function handleLogIn(userInput){
-    console.log("handleLogIn run")
-    fetch (herokuAPIEndpoint + `find/` + `?username=` + userInput)
+function handleLogIn(){
+    var userInput = document.getElementById("username-input").value
+    console.log(userInput)
+    GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
+    console.log(GETbyUsernameURL)
+    fetch (GETbyUsernameURL)
     .then(response => {
         if (response.ok) {
             return response.json();
@@ -48,10 +54,8 @@ function handleLogIn(userInput){
     })
     .then(function(){
         loggedIn = true
-        $("#save-profile").off("click");
-        $("#save-profile").click(function(){
-        clickSave(loggedIn)
-        })
+        console.log(`Now logged in as ${Bulma}`)
+        reassessSituation()
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
@@ -67,7 +71,7 @@ function createProfilePopup(){
         $("#popup-box").fadeIn("fast", () => {});
     });
     document.getElementById("popup-form").reset();
-    var userInput = document.getElementById("username-input").value
+    // var userInput = document.getElementById("username-input").value
     $(`.loan-card`).hide()
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`.profile-card`).show()
@@ -83,12 +87,12 @@ function createProfilePopup(){
     $(`#add-title`).replaceWith(`<h2 id="add-title">Create Profile or Log In</h2>`)
     logIn.classList.remove("hidden")
     $("#new-card-save").click(function(){
-        handleCreateProfile(userInput)
+        handleCreateProfile()
         resetBox(logIn)
     })
 
     $("#log-in").click(function(){
-        handleLogIn(userInput)
+        handleLogIn()
         resetBox(logIn)
     })
    
@@ -143,4 +147,8 @@ function resetBox(logIn){
     $(`.percent-symbol`).replaceWith(
         `<span class="percent-symbol">% </span>`)
     clearPopup(logIn)
+}
+
+function reassessSituation(){
+    console.log("Let's reassess who's logged in and the loan situation.")
 }
