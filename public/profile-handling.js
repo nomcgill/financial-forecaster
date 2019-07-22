@@ -39,30 +39,27 @@ function handleCreateProfile(userInput){
 function handleLogIn(){
     var userInput = document.getElementById("username-input").value
     console.log(userInput)
-    GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
+    var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     console.log(GETbyUsernameURL)
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.ok) {
+            console.log(response)
             return response.json();
         }
         throw new Error (response.statusText);
     })
-    .then (userObject => {
-        currentUser = userObject
-    })
-    .then(function(){
+    .then( userObject => {
         if (currentUser.username !== undefined){
-        loggedIn = true
-        resetBox()
-        console.log(`Now logged in as ${currentUser.username}`)
-        reassessNavBar()
+            currentUser = userObject
+            loggedIn = true
+            resetBox()
+            reassessNavBar()
+            console.log(`Now logged in as ${currentUser.username}`)
         }
         else {
             alert("username is still undefined! (for some reason)")
         }
-        resetBox(logIn)
-
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
@@ -117,7 +114,6 @@ function createLogOutPopUp(){
         $("#popup-box").fadeIn("fast", () => {});
     });
     document.getElementById("popup-form").reset();
-    var userInput = document.getElementById("username-input").value
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`form input`).hide()
     $(`.currency-symbol`).replaceWith(
