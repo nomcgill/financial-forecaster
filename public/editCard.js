@@ -71,6 +71,7 @@ function clearPopup(deleteCard){
     if (deleteCard !== undefined){
         deleteCard.classList.add("hidden")}
     stopListening()
+    debugger
     reassessNavBar()
 }
 

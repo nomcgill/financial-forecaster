@@ -9,7 +9,7 @@ let currentUser = {
     loans: []
 }
 
-const loans = currentUser.loans
+var loans = currentUser.loans
 // var loans = mockData
 // var loans = exampleLoans
 

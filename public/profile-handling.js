@@ -42,24 +42,34 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.ok) {
-            return response.json();
+            console.log(response);
         }
         throw new Error (response.statusText);
     })
     .then(data => {
+        debugger;
         if (data["data"][0].username !== false){
-            currentUser = data["data"][0]
             loggedIn = true
+            currentUser = data["data"][0]
+            return currentUser
             alert(`Now logged in as ${currentUser.username}.`)            
         }
         else {
             alert("Something went wrong in handleLogIn? ")
         }
     })
-    .then(
+    .then(data => {
+        loans = currentUser.loans
+        console.log(data)
+        debugger;
+        alert(`Now logged in as ${currentUser.username}.`)            
+    })
+    .then(data => {
+        console.log(data)
+        debugger;
         resetBox()
-    )
-    .catch (error => alert (`Error in GETting users: ${error.message}`));
+    })
+    .catch (error => alert (`Invalid Username: ${error.message}`));
 }
 
 function logOut(){
