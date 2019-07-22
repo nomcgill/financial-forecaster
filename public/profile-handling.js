@@ -61,11 +61,14 @@ function handleLogIn(){
         else {
             alert("username is still undefined! (for some reason)")
         }
+        resetBox(logIn)
+
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
 
 function logOut(){
+    loggedIn = false
     alert("You've been logged out.")
 //Revoke passport token
     window.location.reload(true)
@@ -160,5 +163,7 @@ function reassessNavBar(){
     else {
         $(`nav`).replaceWith(`<nav>Log In to Save Hurdles</nav>`)
     }
+    $("nav").off()
+    $("#save-profile").off()
     watchForSave()
 }
