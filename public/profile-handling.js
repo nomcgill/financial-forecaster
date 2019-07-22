@@ -42,7 +42,6 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.ok) {
-            console.log(response)
             return response.json();
         }
         throw new Error (response.statusText);
@@ -51,14 +50,15 @@ function handleLogIn(){
         if (data["data"][0].username !== false){
             currentUser = data["data"][0]
             loggedIn = true
-            alert(`Now logged in as ${currentUser.username}.`)
-            resetBox()
-            
+            alert(`Now logged in as ${currentUser.username}.`)            
         }
         else {
             alert("Something went wrong in handleLogIn? ")
         }
     })
+    .then(
+        resetBox()
+    )
     .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
 
@@ -148,7 +148,6 @@ function resetBox(){
 }
 
 function reassessNavBar(){
-    console.log("Let's reassess who's logged in.")
     if (loggedIn === true){
         $(`nav`).replaceWith(`<nav>Profile: <span id="profile">${currentUser.username}</span></nav>`)
     }
