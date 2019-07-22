@@ -38,9 +38,7 @@ function handleCreateProfile(userInput){
 
 function handleLogIn(){
     var userInput = document.getElementById("username-input").value
-    console.log(userInput)
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
-    console.log(GETbyUsernameURL)
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.ok) {
@@ -50,10 +48,12 @@ function handleLogIn(){
         throw new Error (response.statusText);
     })
     .then(data => {
+        debugger;
         console.log(data[0])
         if (data[0].username !== false){
             currentUser = data[0]
             console.log(currentUser)
+            debugger;
             loggedIn = true
             resetBox()
             console.log(`Now logged in as ${currentUser.username}`)
