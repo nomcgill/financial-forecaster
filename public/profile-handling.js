@@ -115,6 +115,7 @@ function createLogOutPopUp(){
     document.getElementById("popup-form").reset();
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`form input`).hide()
+    $(`#log-in`).hide()
     $(`.currency-symbol`).replaceWith(
         `<span class="currency-symbol"></span>`
         )
@@ -125,13 +126,16 @@ function createLogOutPopUp(){
     $(`#add-title`).replaceWith(`<h2 id="add-title">Log Out?</h2>`)
     
     $("#new-card-save").click(function(){
+        $(`#log-in`).hide()
         logOut()
     })
    
     $("#popup-close").click(() => {
+        $(`#log-in`).hide()
         resetBox()
     });             
     $("#new-card-cancel").click(() => {
+        $(`#log-in`).hide()
         resetBox()
     });
 }
@@ -148,7 +152,7 @@ function resetBox(){
 }
 
 function reassessNavBar(){
-    if (loggedIn === true){
+    if (loggedIn){
         $(`nav`).replaceWith(`<nav>Profile: <span id="profile">${currentUser.username}</span></nav>`)
     }
     else {

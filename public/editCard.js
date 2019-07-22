@@ -65,7 +65,6 @@ function removeLoan(placement){
 function clearPopup(deleteCard){
     $("#grid").empty()
     gatherInfo(loans)
-    debugger;
     $("#list-builder, #popup-box").hide();
     $(`#new-card-save`).replaceWith(`<button type="submit" id="new-card-save" name="Add-Hurdle">Add Hurdle</button>`)
     $(`#add-title`).replaceWith(`<h2 id="add-title">Add New Debt Hurdle</h2>`)                                                                                     
