@@ -49,16 +49,16 @@ function handleLogIn(){
         }
         throw new Error (response.statusText);
     })
-    .then( userObject => {
-        if (currentUser.username !== undefined){
-            currentUser = userObject
+    .then( data => {
+        if (data.username !== false){
+            currentUser = data
             loggedIn = true
             resetBox()
             reassessNavBar()
             console.log(`Now logged in as ${currentUser.username}`)
         }
         else {
-            alert("username is still undefined! (for some reason)")
+            alert("Something went wrong in handleLogIn? ")
         }
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
@@ -78,6 +78,7 @@ function createProfilePopup(){
     document.getElementById("popup-form").reset();
     // var userInput = document.getElementById("username-input").value
     $(`.loan-card`).hide()
+    $("#log-in").off()
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`.profile-card`).show()
     $(`#username-input`).prop('required',true);

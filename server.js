@@ -94,7 +94,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
             err
               ? reject(err)
               : resolve(
-                res.json({ data }).status(201).send()
+                res.json({ data }).send()
               );
           });
       }).catch(e => {
