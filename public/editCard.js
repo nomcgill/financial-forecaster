@@ -82,7 +82,6 @@ function stopListening(){
     $("#new-card-cancel").off()
     watchForEdits()
     watchForAdd()
-    watchForSave()
 }
 
 function watchForEdits(){

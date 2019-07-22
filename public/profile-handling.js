@@ -153,11 +153,12 @@ function resetBox(){
 }
 
 function reassessNavBar(){
-    console.log("Let's reassess who's logged in and the loan situation.")
+    console.log("Let's reassess who's logged in.")
     if (loggedIn === true){
         $(`nav`).replaceWith(`<nav>Profile: <span id="profile">${currentUser.username}</span></nav>`)
     }
     else {
         $(`nav`).replaceWith(`<nav>Log In to Save Hurdles</nav>`)
     }
+    watchForSave()
 }
