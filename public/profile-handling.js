@@ -50,12 +50,12 @@ function handleLogIn(){
         throw new Error (response.statusText);
     })
     .then(data => {
-        console.log(data)
-        if (data.username !== false){
-            currentUser = data
+        console.log(data[0])
+        if (data[0].username !== false){
+            currentUser = data[0]
+            console.log(currentUser)
             loggedIn = true
             resetBox()
-            reassessNavBar()
             console.log(`Now logged in as ${currentUser.username}`)
         }
         else {
