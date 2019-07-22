@@ -22,7 +22,7 @@ function handleProfileClick(){
         createProfilePopup()
     }
     if (currentUser.username){
-        createLogOutPopUp(loadedUser)
+        createLogOutPopUp()
     }
 }
 
@@ -48,15 +48,12 @@ function handleLogIn(){
         throw new Error (response.statusText);
     })
     .then(data => {
-        debugger;
-        console.log(data[0])
-        if (data[0].username !== false){
-            currentUser = data[0]
-            console.log(currentUser)
-            debugger;
+        if (data["data"][0].username !== false){
+            currentUser = data["data"][0]
             loggedIn = true
+            alert(`Now logged in as ${currentUser.username}.`)
             resetBox()
-            console.log(`Now logged in as ${currentUser.username}`)
+            
         }
         else {
             alert("Something went wrong in handleLogIn? ")
