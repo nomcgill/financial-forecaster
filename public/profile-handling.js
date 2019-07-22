@@ -49,7 +49,8 @@ function handleLogIn(){
         }
         throw new Error (response.statusText);
     })
-    .then( data => {
+    .then(data => {
+        console.log(data)
         if (data.username !== false){
             currentUser = data
             loggedIn = true
