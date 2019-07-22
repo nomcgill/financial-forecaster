@@ -101,6 +101,7 @@ function createProfilePopup(){
 
     $("#log-in").click(function(){
         handleLogIn()
+        $("#log-in").off()
     })
    
     $("#popup-close").click(() => {
@@ -130,10 +131,6 @@ function createLogOutPopUp(){
     
     $("#new-card-save").click(function(){
         logOut()
-    })
-    
-    $("#log-in").click(function(){
-        handleLogIn(userInput)
     })
    
     $("#popup-close").click(() => {
