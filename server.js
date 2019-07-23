@@ -86,7 +86,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
           .toArray(function(err, data) {
             if (data.length === 0){
               reject(err)
-              return res.status(404).json({ Error: 'Username not found.' });
+              return res.status(404).send(`Username not found.`);
             }
             if (data.length === 1){
               resolve(

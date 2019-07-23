@@ -42,9 +42,8 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.status === 404) {
-            return response.json()
+            throw new Error (response.statusText);
         }
-        throw new Error (response.statusText);
     })
     .then(response => {
         if (response.status === 200){
@@ -60,7 +59,7 @@ function handleLogIn(){
         resetBox()
         alert(`Now logged in as ${currentUser.username}.`)            
     })
-    .catch (error => alert (`Error in GETting users: ${error.message}`));
+    .catch (error => alert (`${error}`));
 }
 
 //         if (response.ok) {
