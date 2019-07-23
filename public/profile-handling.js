@@ -42,16 +42,20 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.status === 404) {
-            throw new Error (response.statusText);
+        debugger
+            var text = `${response.status}: Username not found.`
+            throw new Error (text);
         }
     })
     .then(response => {
+        debugger
         if (response.status === 200){
-        var data = response
-        currentUser = data
-        loans = currentUser.loans[0]
-        loggedIn = true
-        return currentUser
+            $("#log-in").off()
+            var data = response
+            currentUser = data
+            loans = currentUser.loans[0]
+            loggedIn = true
+            return currentUser
         }
     })
     .then(data => {
@@ -122,7 +126,6 @@ function createProfilePopup(){
 
     $("#log-in").click(function(){
         handleLogIn()
-        $("#log-in").off()
     })
    
     $("#popup-close").click(() => {

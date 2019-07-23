@@ -94,6 +94,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
               );
             }
             else {
+              reject(err)
               return res.status(400).json({ message: 'Something crazy unexpected happened.' });
             }
           });
