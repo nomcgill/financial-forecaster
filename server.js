@@ -8,10 +8,6 @@ const assert = require('assert');
 const morgan = require('morgan');
 // const passport = require('passport');
 
-// const db = client.db('financial-forecaster')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-// const collection = db.collection('userloans')
-
-
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
@@ -40,7 +36,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-//GET list of entire userloans collection
+//GET list of entire userloans collection. Reference array by response.items
 app.get(`/user-loans/`, (req, res) => {
   try {
     MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
@@ -128,19 +124,19 @@ app.get(`/user-loans/:id`, (req, res) => {
           .findOne({"_id": new ObjectId(req.params.id)}, function(err, data) {
               if (!(data)){
                 reject(err)
-                res.json({ message: `ID does not match any doc in database.` }).status(409).send()
-                return false
-                }
-              else {resolve}
-              err
-                ? reject(err)
-                : resolve(
-                  res.json({data}).status(200).send()
+                return res.status(404).send(`Username not found.`);
+              }
+              else {
+                resolve(
+                res.json(data)                  
                 );
-            });
-        }).catch(e => {
-          return false
-       })            
+              }
+           })
+        })
+        .catch(e => {
+           debugger
+           return false
+        })            
       }
       await myPromise() 
       client.close();
@@ -169,14 +165,11 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
               res.json({ message: `Username ${req.body.username} is already taken.` }).status(409).send()
               return false
               }
-            else {resolve}
-            console.log(err);
-            console.log(data);
             err
               ? reject(err)
               : resolve(
                 collection.insertOne(userloans.create(req.body.username, req.body.loans)),
-                res.json({ message: `${req.body.username} added to database.`}).status(201).send()
+                res.status(200).send(`${data} added to database!`)
               );
           });
       }).catch(e => {
@@ -196,7 +189,7 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
   if (req.params.id.toString().length !== 24 ){
     res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
   }
-  if (!(req.params.id === req.body.id)) {
+  if (!(req.params.id === req.body._id)) {
     res.status(400).send({
       error: 'Request path id and request body id values must match'
     })
@@ -214,29 +207,26 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
            .find({username: req.body.username})
            .limit(1)
            .toArray(function(err, data) {
-             console.log(data)
-             console.log(err)
               if(data.length > 0){
                 if (data[0]._id.toString() !== req.params.id){
                   reject(err)
-                  res.json({ message: `Username ${req.body.username} does not match database ID.` }).status(409).send()
+                  res.status(409).send({ error: `Username ${req.body.username} does not match database ID.` })
                   return false
                 }
-                else {resolve}
+                else {
+                  resolve (
+                    collection.updateOne({"username": req.body.username}, { $set: { "loans" : req.body.loans } }),
+                    res.status(204).send("Updated!")
+                  );
+                }
               }
-              else{
+              else {
                 reject(err)
-                res.json({ message: `Username ${req.body.username} not found in database.` }).status(409).send()
+                res.status(409).send({ error: `Username ${req.body.username} not found in database.` })
                 return false
-              }
-              err
-              ? reject(err)
-              : resolve(
-                  collection.updateOne({"username": req.body.username}, { $set: { "loans" : req.body.loans } }),
-                  res.status(204).send()
-                );
-              });
-          }).catch(e => {
+              }              
+            });
+          }).catch (e => {
             return false
          })            
         }
