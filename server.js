@@ -51,7 +51,7 @@ app.get(`/user-loans/`, (req, res) => {
               err
                 ? reject(err)
                 : resolve(
-                  res.json({items}).status(200).send()
+                  res.json(items).status(200).send()
                 );
             });
         }).catch(e => {

@@ -1,5 +1,4 @@
 var herokuAPIEndpoint = "https://financial-forecaster.herokuapp.com/"
-var userInput = document.getElementById("username-input").value
 
 function watchForSave(){
     $("nav").click(function(){
@@ -27,14 +26,17 @@ function handleProfileClick(){
     }
 }
 
-function handleCreateProfile(userInput){
+function handleCreateProfile(){
+    var userInput = document.getElementById("username-input").value
+    debugger
     console.log('handleCreateProfile userInput: ' + userInput)
     var postURL = herokuAPIEndpoint + `user-loans/` + userInput
 
     var data = {
-        username: currentUser.username,
-        loans: currentUser.loans[0]
+        username: userInput,
+        loans: loans
     };
+    debugger
     
     fetch(postURL, {
       method: 'POST',
@@ -44,21 +46,24 @@ function handleCreateProfile(userInput){
       }
     })
     .then( response => {
+        debugger;
         if (response.status === 200){
             return response.json()
         }
         if (response.status === 400 || response.status === 409){
-            throw new Error (response.statusText);
+            throw new Error (response.message);
         }
     })
     .then(response => 
-        console.log('Success:', JSON.stringify(response)),
+        console.log('Success: ' + response),
         handleLogIn(userInput)
     )
-    .catch(error => console.error('Error: ', error.error));
+    .catch(error => console.error('Error: ' + error));
 }
 
 function handleLogIn(userInput){
+    var userInput = document.getElementById("username-input").value
+    debugger
     console.log('handleLogIn userInput: ' + userInput)
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
@@ -113,12 +118,12 @@ function createProfilePopup(){
     $(`#add-title`).replaceWith(`<h2 id="add-title">Create Profile or Log In</h2>`)
     logIn.classList.remove("hidden")
     $("#new-card-save").click(function(){
-        handleCreateProfile(userInput)
+        handleCreateProfile()
         resetBox(logIn)
     })
 
     $("#log-in").click(function(){
-        handleLogIn(userInput)
+        handleLogIn()
     })
    
     $("#popup-close").click(() => {
