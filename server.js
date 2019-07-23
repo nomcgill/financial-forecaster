@@ -249,7 +249,7 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
     });
 
 app.use('*', (req, res) => {
-  return res.status(404).json({ message: 'Not Found' });
+  return res.status(500).json({ message: 'Not Found' });
 });
 
 let server;
@@ -266,7 +266,7 @@ function runServer() {
           resolve();
         })
         .on('error', err => {
-          mongoose.disconnect();
+          console.log("Error with server code!")
           reject(err);
         });
     });

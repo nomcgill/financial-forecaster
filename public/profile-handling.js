@@ -42,23 +42,22 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.status === 404) {
-        debugger
-            var text = `${response.status}: Username not found.`
-            throw new Error (text);
+            debugger
+            throw new Error (response.status + `: Username not found.`);
         }
-    })
-    .then(response => {
-        debugger
-        if (response.status === 200){
-            $("#log-in").off()
-            var data = response
-            currentUser = data
-            loans = currentUser.loans[0]
-            loggedIn = true
-            return currentUser
+        if (response.status === 200) {
+            debugger
+            return response.json();
         }
     })
     .then(data => {
+        currentUser = data
+        loans = currentUser.loans[0]
+        loggedIn = true
+        return currentUser
+    })
+    .then(data => {
+        $("#log-in").off()
         console.log(data)
         resetBox()
         alert(`Now logged in as ${currentUser.username}.`)            
