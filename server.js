@@ -90,11 +90,11 @@ app.get('/find', jsonParser, async (req, res, next) => {
             }
             if (data.length === 1){
               resolve(
-                res.json(data[0]).send()
+                res.status(200).json(data[0]).send()
               );
             }
             else {
-              return res.status(404).json({ message: 'Something crazy unexpected happened.' });
+              return res.status(400).json({ message: 'Something crazy unexpected happened.' });
             }
           });
       }).catch(e => {

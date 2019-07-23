@@ -41,21 +41,18 @@ function handleLogIn(){
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
     .then(response => {
-        if (response.ok) {
-            console.log(response.ok)
-            return response.json();
+        if (response.status === 404) {
+            return response.json()
         }
         throw new Error (response.statusText);
     })
-    .then(data => {
-            if (data.username !== false){
-            currentUser = data
-            loans = currentUser.loans[0]
-            loggedIn = true
-            return currentUser
-        }
-        else {
-            alert("Something went wrong in handleLogIn?")
+    .then(response => {
+        if (response.status === 200){
+        var data = response
+        currentUser = data
+        loans = currentUser.loans[0]
+        loggedIn = true
+        return currentUser
         }
     })
     .then(data => {
@@ -65,6 +62,31 @@ function handleLogIn(){
     })
     .catch (error => alert (`Error in GETting users: ${error.message}`));
 }
+
+//         if (response.ok) {
+//             console.log(response.ok)
+//             return response.json();
+//         }
+//         throw new Error (response.statusText);
+//     })
+//     .then(data => {
+//             if (data.username !== false){
+//             currentUser = data
+//             loans = currentUser.loans[0]
+//             loggedIn = true
+//             return currentUser
+//         }
+//         else {
+//             alert("Something went wrong in handleLogIn?")
+//         }
+//     })
+//     .then(data => {
+//         console.log(data)
+//         resetBox()
+//         alert(`Now logged in as ${currentUser.username}.`)            
+//     })
+//     .catch (error => alert (`Error in GETting users: ${error.message}`));
+// }
 
 function logOut(){
     loggedIn = false
