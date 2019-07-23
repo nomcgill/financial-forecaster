@@ -42,13 +42,14 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.ok) {
+            console.log(response.ok)
             return response.json();
         }
         throw new Error (response.statusText);
     })
     .then(data => {
-            if (data["data"][0].username !== false){
-            currentUser = data["data"][0]
+            if (data.username !== false){
+            currentUser = data
             loans = currentUser.loans[0]
             loggedIn = true
             return currentUser

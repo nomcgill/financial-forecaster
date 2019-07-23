@@ -84,18 +84,18 @@ app.get('/find', jsonParser, async (req, res, next) => {
           .find({username: req.query.username})
           .limit(1)
           .toArray(function(err, data) {
-            if (!(data)){
+            if (data.length === 0){
               reject(err)
-              res.json({ message: `Username ${req.params.username} not found.` }).status(409).send()
-              return false
-              }
-            console.log(err);
-            console.log(data);
-            err
-              ? reject(err)
-              : resolve(
-                res.json({ data }).send()
+              return res.status(404).json({ Error: 'Username not found.' });
+            }
+            if (data.length === 1){
+              resolve(
+                res.json(data[0]).send()
               );
+            }
+            else {
+              return res.status(404).json({ message: 'Something crazy unexpected happened.' });
+            }
           });
       }).catch(e => {
         return false
