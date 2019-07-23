@@ -27,17 +27,38 @@ function handleProfileClick(){
 }
 
 function handleCreateProfile(userInput){
-    console.log("handleCreateProfile run")
-    var userInput = document.getElementById("username-input").value
-    console.log(userInput)
-    //Check for existing username. If none, POST new username & pass to database. username : userInput, loans : []
-    .then(
+    console.log('handleCreateProfile userInput: ' + userInput)
+    var postURL = herokuAPIEndpoint + `user-loans/` + userInput
+
+    var data = {
+        username: currentUser.username,
+        loans: currentUser.loans[0]
+    };
+    
+    fetch(postURL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then( response => {
+        if (response.status === 200){
+            return response.json()
+        }
+        if (response.status === 400 || response.status === 409){
+            throw new Error (response.statusText);
+        }
+    })
+    .then(response => 
+        console.log('Success:', JSON.stringify(response)),
         handleLogIn(userInput)
     )
+    .catch(error => console.error('Error: ', error.error));
 }
 
-function handleLogIn(){
-    var userInput = document.getElementById("username-input").value
+function handleLogIn(userInput){
+    console.log('handleLogIn userInput: ' + userInput)
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
     .then(response => {
@@ -63,31 +84,6 @@ function handleLogIn(){
     .catch (error => alert (`${error}`));
 }
 
-//         if (response.ok) {
-//             console.log(response.ok)
-//             return response.json();
-//         }
-//         throw new Error (response.statusText);
-//     })
-//     .then(data => {
-//             if (data.username !== false){
-//             currentUser = data
-//             loans = currentUser.loans[0]
-//             loggedIn = true
-//             return currentUser
-//         }
-//         else {
-//             alert("Something went wrong in handleLogIn?")
-//         }
-//     })
-//     .then(data => {
-//         console.log(data)
-//         resetBox()
-//         alert(`Now logged in as ${currentUser.username}.`)            
-//     })
-//     .catch (error => alert (`Error in GETting users: ${error.message}`));
-// }
-
 function logOut(){
     loggedIn = false
     alert("You've been logged out.")
@@ -100,7 +96,7 @@ function createProfilePopup(){
         $("#popup-box").fadeIn("fast", () => {});
     });
     document.getElementById("popup-form").reset();
-    // var userInput = document.getElementById("username-input").value
+    var userInput = document.getElementById("username-input").value
     $(`.loan-card`).hide()
     $("#log-in").off()
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
@@ -117,12 +113,12 @@ function createProfilePopup(){
     $(`#add-title`).replaceWith(`<h2 id="add-title">Create Profile or Log In</h2>`)
     logIn.classList.remove("hidden")
     $("#new-card-save").click(function(){
-        handleCreateProfile()
+        handleCreateProfile(userInput)
         resetBox(logIn)
     })
 
     $("#log-in").click(function(){
-        handleLogIn()
+        handleLogIn(userInput)
     })
    
     $("#popup-close").click(() => {
@@ -178,7 +174,7 @@ function resetBox(){
 
 function reassessNavBar(){
     if (loggedIn){
-        $(`nav`).replaceWith(`<nav>Profile: <span id="profile">${currentUser.username}</span></nav>`)
+        $(`nav`).replaceWith(`<nav id="${currentUser._id}">Profile: <span id="profile">${currentUser.username}</span></nav>`)
     }
     else {
         $(`nav`).replaceWith(`<nav>Log In to Save Hurdles</nav>`)

@@ -161,25 +161,24 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
           .limit(1)
           .toArray(function(err, data) {
             if (data.length > 0){
-              reject(err)
-              res.json({ message: `Username ${req.body.username} is already taken.` }).status(409).send()
-              return false
-              }
-            err
-              ? reject(err)
-              : resolve(
+              reject()
+            }
+            if (data.length === 1){
+              resolve(
                 collection.insertOne(userloans.create(req.body.username, req.body.loans)),
                 res.status(200).send(`${data} added to database!`)
               );
+            }
           });
-      }).catch(e => {
-        return false
-     })            
+        }).catch(e => {
+          return res.json({ message: `Username ${req.body.username} is already taken.` }).status(409).send()
+      })            
     }
     await myPromise() 
     client.close();
   });
   } catch (e) {
+    res.json({ message: `POST connection failed: ${e}`}).status(400)
     next(e)
   }
 });
@@ -222,7 +221,7 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
               }
               else {
                 reject(err)
-                res.status(409).send({ error: `Username ${req.body.username} not found in database.` })
+                res.status(404).send({ error: `Username ${req.body.username} not found in database.` })
                 return false
               }              
             });
