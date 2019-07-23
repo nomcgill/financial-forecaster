@@ -42,11 +42,9 @@ function handleLogIn(){
     fetch (GETbyUsernameURL)
     .then(response => {
         if (response.status === 404) {
-            debugger
             throw new Error (response.status + `: Username not found.`);
         }
         if (response.status === 200) {
-            debugger
             return response.json();
         }
     })
