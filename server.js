@@ -90,7 +90,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
             }
             if (data.length === 1){
               resolve(
-                res.status(200).json(data[0]).send()
+                res.json(data[0])
               );
             }
             else {
@@ -266,7 +266,7 @@ function runServer() {
           resolve();
         })
         .on('error', err => {
-          console.log("Error with server code!")
+          mongoose.disconnect();
           reject(err);
         });
     });
