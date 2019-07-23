@@ -196,7 +196,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
-/* mobile */
+/* DESKTOP */
 @media only screen and (min-width: 768px) {
   h1 {
     font-size: 3em;
