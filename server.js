@@ -163,7 +163,7 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
             if (data.length > 0){
               reject()
             }
-            if (data.length === 1){
+            if (data.length === 0){
               resolve(
                 collection.insertOne(userloans.create(req.body.username, req.body.loans)),
                 res.status(200).send(`${data} added to database!`)

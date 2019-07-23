@@ -1,4 +1,5 @@
 var herokuAPIEndpoint = "https://financial-forecaster.herokuapp.com/"
+var userInput = document.getElementById("username-input").value
 
 function watchForSave(){
     $("nav").click(function(){
@@ -96,7 +97,6 @@ function createProfilePopup(){
         $("#popup-box").fadeIn("fast", () => {});
     });
     document.getElementById("popup-form").reset();
-    var userInput = document.getElementById("username-input").value
     $(`.loan-card`).hide()
     $("#log-in").off()
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
