@@ -164,7 +164,6 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
               reject("Username already exists.")
             }
             if (data.length === 0){
-              console.log("passing")
               resolve(
                 collection.insertOne(userloans.create(req.body.username, req.body.loans))
               );
@@ -176,8 +175,6 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
           });
         }).catch(e => {
           return res.json({message: e})
-          // console.log(e)
-          // return res.json({ message: `Username ${req.body.username} is already taken.` })
       })            
     }
     await myPromise() 

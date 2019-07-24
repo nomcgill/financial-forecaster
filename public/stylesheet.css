@@ -38,13 +38,13 @@ header h3 {
 
 nav {
   margin-bottom: 8px;
-  font-size: 0.78em;
+  font-size: 0.9em;
   text-align: center;
   background-color: rgb(115, 192, 128);
   color: white;
   border-radius: 2px;
   padding-top: 2px;
-  height: 18px;
+  height: 21px;
   width: 200px;
   margin: 0 auto;
   cursor: pointer;

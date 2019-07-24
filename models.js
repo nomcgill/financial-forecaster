@@ -10,7 +10,6 @@ const userloans = {
       username: name,
       loans: [loans]
     };
-    console.log(user)
     return user
   },
   get: function() {
