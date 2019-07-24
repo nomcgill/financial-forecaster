@@ -27,14 +27,15 @@ function handleProfileClick(){
     }
 }
 
-async function handleCreateProfile(logIn){
+function handleCreateProfile(logIn){
     var userInput = document.getElementById("username-input").value
     var postURL = herokuAPIEndpoint + `user-loans/`
-
+console.log(postURL)
     var data = {
         username: userInput,
         loans: loans
     };
+    console.log(JSON.stringify(data))
     fetch(postURL, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -43,26 +44,25 @@ async function handleCreateProfile(logIn){
       }
     })
     .then(response => {
-        var promise1 = new Promise(function(resolve, reject) {
-            if (response.status === 200){
-                resolve(response.json())
-            }
-            else {
-                throw new Error (JSON.stringify(response.message));
-            }
-        })
-        //something in the line below does not have double quotes? Probably from promise1?
-        promise1
-        .then(function(item){
-            console.log(userInput)
-            handleLogIn(logIn)
-        })
+        if (response.status === 200){
+            console.log(response)
+            return response
+        }
+        else {
+            console.log(response)
+            throw new Error (response.message);
+        }
+    })
+    .then(something => {
+        console.log(something)
+        handleLogIn(logIn)
     })
     .catch(error => console.error('Error: ' + error));
 }
 
 
 function handleLogIn(logIn){
+    console.log("handleLogIn")
     var userInput = document.getElementById("username-input").value
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
