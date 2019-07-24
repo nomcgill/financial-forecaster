@@ -30,7 +30,7 @@ function handleCreateProfile(){
     var userInput = document.getElementById("username-input").value
     debugger
     console.log('handleCreateProfile userInput: ' + userInput)
-    var postURL = herokuAPIEndpoint + `user-loans/` + userInput
+    var postURL = herokuAPIEndpoint + `user-loans/`
 
     var data = {
         username: userInput,
@@ -45,7 +45,7 @@ function handleCreateProfile(){
         'Content-Type': 'application/json'
       }
     })
-    .then( response => {
+    .then(response => {
         debugger;
         if (response.status === 200){
             return response.json()
@@ -54,8 +54,8 @@ function handleCreateProfile(){
             throw new Error (response.message);
         }
     })
-    .then(response => 
-        console.log('Success: ' + response),
+    .then(item => 
+        console.log('Success: ' + item),
         handleLogIn(userInput)
     )
     .catch(error => console.error('Error: ' + error));
