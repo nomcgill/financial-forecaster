@@ -52,7 +52,7 @@ async function handleCreateProfile(logIn){
             }
         })
         //something in the line below does not have double quotes? Probably from promise1?
-        await promise1
+        promise1
         .then(function(item){
             console.log(userInput)
             handleLogIn(logIn)
