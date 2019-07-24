@@ -43,21 +43,24 @@ console.log(postURL)
         'Content-Type': 'application/json'
       }
     })
-    .then(response => {
-        if (response.status === 200){
-            console.log(response)
-            return response
-        }
-        else {
-            console.log(response)
-            throw new Error (response.message);
-        }
-    })
-    .then(something => {
-        console.log(something)
-        handleLogIn(logIn)
-    })
-    .catch(error => console.error('Error: ' + error));
+    .then(res => res.json())
+    .then(response => console.log('Success:', JSON.stringify(response)))
+    // .then(something => {
+    //     console.log(something)
+    //     handleLogIn(logIn)
+    .catch(error => console.error('Error:', error))
+    // .then(response => {
+    //     if (response.status === 200){
+    //         console.log(response)
+    //         return response
+    //     }
+    //     else {
+    //         console.log(response)
+    //         throw new Error (response.message);
+    //     }
+    // })
+    // })
+    // .catch(error => console.error('Error: ' + error));
 }
 
 

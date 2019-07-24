@@ -166,7 +166,7 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
             if (data.length === 0){
               resolve(
                 collection.insertOne(userloans.create(req.body.username, req.body.loans)),
-                res.status(200).send(`${req.body.username} added to database!`)
+                res.json(data)
               );
             }
           });
