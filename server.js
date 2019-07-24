@@ -82,7 +82,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
           .toArray(function(err, data) {
             if (data.length === 0){
               reject(err)
-              return res.status(404).send(`Username not found.`);
+              return res.status(404).send("Username not found.");
             }
             if (data.length === 1){
               resolve(
@@ -91,7 +91,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
             }
             else {
               reject(err)
-              return res.status(400).json({ message: 'Something crazy unexpected happened.' });
+              return res.status(400).json({ message: "Something crazy unexpected happened." });
             }
           });
       }).catch(e => {
@@ -109,7 +109,7 @@ app.get('/find', jsonParser, async (req, res, next) => {
 //GET single object by ID
 app.get(`/user-loans/:id`, (req, res) => {
   if (req.params.id.toString().length !== 24 ){
-    res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
+    res.json({ message: "ObjectId in the database is always 24 digits." }).status(409).send()
   }
   try {
     MongoClient.connect(DATABASE_URL, {useNewUrlParser: true}, async function(err, client) {    
@@ -124,7 +124,7 @@ app.get(`/user-loans/:id`, (req, res) => {
           .findOne({"_id": new ObjectId(req.params.id)}, function(err, data) {
               if (!(data)){
                 reject(err)
-                return res.status(404).send(`Username not found.`);
+                return res.status(404).send("Username not found.");
               }
               else {
                 resolve(
@@ -186,7 +186,7 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
 //UPDATE a user's saved loans.
 app.put('/user-loans/:id', jsonParser, (req, res) => {
   if (req.params.id.toString().length !== 24 ){
-    res.json({ message: `ObjectId in the database is always 24 digits.` }).status(409).send()
+    res.json({ message: "ObjectId in the database is always 24 digits." }).status(409).send()
   }
   if (!(req.params.id === req.body._id)) {
     res.status(400).send({

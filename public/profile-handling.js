@@ -1,3 +1,4 @@
+
 var herokuAPIEndpoint = "https://financial-forecaster.herokuapp.com/"
 
 function watchForSave(){
@@ -26,7 +27,7 @@ function handleProfileClick(){
     }
 }
 
-function handleCreateProfile(){
+async function handleCreateProfile(logIn){
     var userInput = document.getElementById("username-input").value
     var postURL = herokuAPIEndpoint + `user-loans/`
 
@@ -42,20 +43,26 @@ function handleCreateProfile(){
       }
     })
     .then(response => {
-        if (response.status === 200){
-            return response.json()
-        }
-        if (response.status === 400 || response.status === 409){
-            throw new Error (response.message);
-        }
+        var promise1 = new Promise(function(resolve, reject) {
+            if (response.status === 200){
+                resolve(response.json())
+            }
+            else {
+                throw new Error (JSON.stringify(response.message));
+            }
+        })
+        //something in the line below does not have double quotes? Probably from promise1?
+        await promise1
+        .then(function(item){
+            console.log(userInput)
+            handleLogIn(logIn)
+        })
     })
-    .then(item => 
-        handleLogIn(userInput)
-    )
     .catch(error => console.error('Error: ' + error));
 }
 
-function handleLogIn(userInput){
+
+function handleLogIn(logIn){
     var userInput = document.getElementById("username-input").value
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
@@ -75,7 +82,7 @@ function handleLogIn(userInput){
     })
     .then(data => {
         $("#log-in").off()
-        resetBox()
+        resetBox(logIn)
         alert(`Now logged in as ${currentUser.username}.`)            
     })
     .catch (error => alert (`${error}`));
@@ -84,7 +91,6 @@ function handleLogIn(userInput){
 function logOut(){
     loggedIn = false
     alert("You've been logged out.")
-//Revoke passport token
     window.location.reload(true)
 }
 
@@ -110,12 +116,10 @@ function createProfilePopup(){
     logIn.classList.remove("hidden")
     $("#new-card-save").click(function(){
         handleCreateProfile()
-        resetBox(logIn)
     })
 
     $("#log-in").click(function(){
-        console.log("Ran log-in")
-        handleLogIn()
+        handleLogIn(logIn)
     })
    
     $("#popup-close").click(() => {
