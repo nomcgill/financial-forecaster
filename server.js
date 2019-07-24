@@ -161,17 +161,23 @@ app.post('/user-loans', jsonParser, async (req, res, next) => {
           .limit(1)
           .toArray(function(err, data) {
             if (data.length > 0){
-              reject()
+              reject("Username already exists.")
             }
             if (data.length === 0){
+              console.log("passing")
               resolve(
-                collection.insertOne(userloans.create(req.body.username, req.body.loans)),
-                res.json(data)
+                collection.insertOne(userloans.create(req.body.username, req.body.loans))
               );
+              return res.json({message: "Successly POSTed!"})
+            }
+            else {
+              reject("Something unexpected went wrong.")
             }
           });
         }).catch(e => {
-          return res.json({ message: `Username ${req.body.username} is already taken.` }).status(409).send()
+          return res.json({message: e})
+          // console.log(e)
+          // return res.json({ message: `Username ${req.body.username} is already taken.` })
       })            
     }
     await myPromise() 

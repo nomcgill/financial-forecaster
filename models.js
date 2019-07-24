@@ -10,7 +10,8 @@ const userloans = {
       username: name,
       loans: [loans]
     };
-    return JSON.stringify(user)
+    console.log(user)
+    return user
   },
   get: function() {
     database = Object.keys(this.items)
