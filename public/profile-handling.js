@@ -28,16 +28,12 @@ function handleProfileClick(){
 
 function handleCreateProfile(){
     var userInput = document.getElementById("username-input").value
-    debugger
-    console.log('handleCreateProfile userInput: ' + userInput)
     var postURL = herokuAPIEndpoint + `user-loans/`
 
     var data = {
         username: userInput,
         loans: loans
     };
-    debugger
-    
     fetch(postURL, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -46,7 +42,6 @@ function handleCreateProfile(){
       }
     })
     .then(response => {
-        debugger;
         if (response.status === 200){
             return response.json()
         }
@@ -55,7 +50,6 @@ function handleCreateProfile(){
         }
     })
     .then(item => 
-        console.log('Success: ' + item),
         handleLogIn(userInput)
     )
     .catch(error => console.error('Error: ' + error));
@@ -63,8 +57,6 @@ function handleCreateProfile(){
 
 function handleLogIn(userInput){
     var userInput = document.getElementById("username-input").value
-    debugger
-    console.log('handleLogIn userInput: ' + userInput)
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
     .then(response => {
@@ -83,7 +75,6 @@ function handleLogIn(userInput){
     })
     .then(data => {
         $("#log-in").off()
-        console.log(data)
         resetBox()
         alert(`Now logged in as ${currentUser.username}.`)            
     })
@@ -103,7 +94,7 @@ function createProfilePopup(){
     });
     document.getElementById("popup-form").reset();
     $(`.loan-card`).hide()
-    $("#log-in").off()
+    $("#log-in").show()
     $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
     $(`.profile-card`).show()
     $(`#username-input`).prop('required',true);
@@ -123,6 +114,7 @@ function createProfilePopup(){
     })
 
     $("#log-in").click(function(){
+        console.log("Ran log-in")
         handleLogIn()
     })
    
@@ -157,16 +149,16 @@ function createLogOutPopUp(){
     })
    
     $("#popup-close").click(() => {
-        $(`#log-in`).hide()
         resetBox()
     });             
     $("#new-card-cancel").click(() => {
-        $(`#log-in`).hide()
         resetBox()
     });
 }
 
 function resetBox(){
+    $(`#log-in`).off()
+    $(`#log-in`).hide()
     $(`.loan-card`).show()
     $(`#username-input`).prop('required',false);
     $(`.profile-card`).hide()
