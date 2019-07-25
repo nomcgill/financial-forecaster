@@ -212,6 +212,15 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: center;
 }
 
+@media only screen and (orientation: landscape) {
+  #results{
+    width: 400px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 55px);
+  }
+}
+
 /* DESKTOP */
 @media only screen and (min-width: 20cm) {
   h1 {
