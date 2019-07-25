@@ -214,9 +214,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 @media only screen and (orientation: landscape) {
   #results{
-    width: 400px;
+    width: 280px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, 55px);
   }
 }
