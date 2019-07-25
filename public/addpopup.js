@@ -2,8 +2,8 @@
 function onAddHurdleClick(){
   document.getElementById("popup-form").reset();
   $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
-  if (loans.length === 7){
-    alert("Financial Forecaster is limited to 8 hurdles. This is one the last available!")
+  if (loans.length === 11){
+    alert("Financial Forecaster is limited to 12 hurdles. This is one the last available!")
   }  
   $("#list-builder").fadeIn("fast", () => {
       $("#popup-box").fadeIn("fast", () => {});

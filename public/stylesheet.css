@@ -18,6 +18,7 @@ html {
 
 h1 {
   font-size: 1.8em;
+  color: darkgreen;
 }
 
 header {
@@ -57,15 +58,17 @@ header, #results, .boxes {
 body {
     font-family: 'Nunito', sans-serif;
     margin: 20px;
+    height: 100%;
 }
 
 #results {
   padding-top: 10px;
-  position: fixed;
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: auto; 
+  left: 0;
+  right: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;  margin-left: auto;
+  margin-right: auto;
   bottom: 33px;
   width: 280px;
   display: grid;
@@ -73,7 +76,7 @@ body {
   grid-template-rows: repeat(1, 55px);
   border-right: solid 2px gray;
   border-left: solid 2px gray;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.726);
 }
 
 .bottom-line {
@@ -113,39 +116,46 @@ body {
   }
   
   #area2 {
-    background-color: rgba(59, 116, 62, 0.95);
+    background-color: rgba(59, 116, 62, 0.96);
   }
 
   #area3 {
-    background-color: rgba(59, 116, 62, 0.90);
+    background-color: rgba(59, 116, 62, 0.92);
   }
 
   #area4 {
-    background-color: rgba(59, 116, 62, 0.85);
+    background-color: rgba(59, 116, 62, 0.88);
   }
 
   #area5 {
-    background-color: rgba(59, 116, 62, 0.80);
+    background-color: rgba(59, 116, 62, 0.85);
   }
 
   #area6 {
-    background-color: rgba(59, 116, 62, 0.75);
+    background-color: rgba(59, 116, 62, 0.82);
   }
 
   #area7 {
-    background-color: rgba(59, 116, 62, 0.70);
+    background-color: rgba(59, 116, 62, 0.79);
   }
 
   #area8 {
-    background-color: rgba(59, 116, 62, 0.65);
+    background-color: rgba(59, 116, 62, 0.76);
   }
 
   #area9 {
-    background-color: rgb(63, 175, 63);
+    background-color: rgba(59, 116, 62, 0.73);
   }
 
   #area10 {
-    background-color: rgb(250, 135, 189);
+    background-color: rgba(59, 116, 62, 0.70);
+  }
+
+  #area11 {
+    background-color: rgba(59, 116, 62, 0.67);
+  }
+  #area12 {
+    background-color: rgba(59, 116, 62, 0.64);
   }
 
   #defaultBox {
@@ -196,8 +206,14 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
+#watermark-credit {
+  padding-top: 5px;
+  font-size: .6em;
+  text-align: center;
+}
+
 /* DESKTOP */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 20cm) {
   h1 {
     font-size: 3em;
   }
@@ -253,7 +269,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(1, 90px);
-    bottom: 130px;
+    bottom: 20px;
   }
 
   #left-header {

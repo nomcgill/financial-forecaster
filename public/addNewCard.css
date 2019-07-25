@@ -76,7 +76,7 @@ input {
     border-radius: 5px;
     text-align: center;
     font-size: 1.2em;
-    /* border: 2px solid black; */
+    min-width: 125px;
 }
 
 input#new-card-name {

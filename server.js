@@ -6,16 +6,11 @@ const mongoose = require('mongoose');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const morgan = require('morgan');
-// const passport = require('passport');
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 const {userloans} = require('./models');
-
-
-// const { router: usersRouter } = require('./users');
-// const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 mongoose.Promise = global.Promise;
 
@@ -134,7 +129,6 @@ app.get(`/user-loans/:id`, (req, res) => {
            })
         })
         .catch(e => {
-           debugger
            return false
         })            
       }

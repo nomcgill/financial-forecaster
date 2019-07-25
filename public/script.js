@@ -10,15 +10,13 @@ let currentUser = {
 }
 
 var loans = currentUser.loans
-// var loans = mockData
-// var loans = exampleLoans
 
 function gatherInfo(loans){
         loans.forEach((loan) => {
             createCards(loan)
         })
         addEmUp(loans)
-        if (loans.length < 8){
+        if (loans.length < 12){
         createAddCardBox()
         }
 }

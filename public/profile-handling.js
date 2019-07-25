@@ -31,12 +31,11 @@ function handleProfileClick(){
 function handleCreateProfile(logIn){
     var userInput = document.getElementById("username-input").value
     var postURL = herokuAPIEndpoint + `user-loans/`
-    console.log(postURL)
     var data = {
         username: userInput,
         loans: loans
     };
-    console.log(JSON.stringify(data))
+
     fetch(postURL, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -51,9 +50,6 @@ function handleCreateProfile(logIn){
         throw new Error (response.statusText);
     })
     .then(response => {
-        console.log('Success:', JSON.stringify(response))
-    })
-    .then(response => {
         handleLogIn(logIn)
     })
     .catch(error => console.error('Error:', error))
@@ -61,7 +57,6 @@ function handleCreateProfile(logIn){
 
 
 function handleLogIn(logIn){
-    console.log("handleLogIn")
     var userInput = document.getElementById("username-input").value
     var GETbyUsernameURL = herokuAPIEndpoint + `find?username=` + userInput
     fetch (GETbyUsernameURL)
@@ -76,7 +71,6 @@ function handleLogIn(logIn){
     .then(data => {
         currentUser = data
         loans = currentUser.loans
-        debugger
         loggedIn = true
         return currentUser
     })
@@ -88,20 +82,15 @@ function handleLogIn(logIn){
     .catch (error => alert (`${error}`));
 }
 
-
-
 function handleSavePutRequest(logIn){
     var myId = $(`nav`).attr('id')
-    console.log(myId)
     var postURL = herokuAPIEndpoint + `user-loans/` + myId
-    console.log(postURL)
     var data = {
         _id: currentUser._id,
         username: currentUser.username,
         loans: currentUser.loans
     };
-    debugger
-    console.log(JSON.stringify(data))
+
     fetch(postURL, {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -116,7 +105,6 @@ function handleSavePutRequest(logIn){
         throw new Error (response.statusText);
     })
     .then(response => {
-        console.log(`Success: ${response.message}`)
         alert("Your Hurdles have been saved.")
     })
     .catch(error => console.error('Error:', error))
@@ -129,6 +117,9 @@ function logOut(){
 }
 
 function createProfilePopup(){
+    if (loans.length > 0){
+        alert("WARNING: Present loans will be lost upon Log In.")
+    }
     $("#list-builder").fadeIn("fast", () => {
         $("#popup-box").fadeIn("fast", () => {});
     });
