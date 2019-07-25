@@ -8,7 +8,7 @@ const userloans = {
   create: function(name, loans) {
     const user = {
       username: name,
-      loans: [loans]
+      loans: loans
     };
     return user
   },

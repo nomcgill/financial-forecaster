@@ -75,7 +75,8 @@ function handleLogIn(logIn){
     })
     .then(data => {
         currentUser = data
-        loans = currentUser.loans[0]
+        loans = currentUser.loans
+        debugger
         loggedIn = true
         return currentUser
     })
@@ -95,9 +96,11 @@ function handleSavePutRequest(logIn){
     var postURL = herokuAPIEndpoint + `user-loans/` + myId
     console.log(postURL)
     var data = {
+        _id: currentUser._id,
         username: currentUser.username,
-        loans: loans
+        loans: currentUser.loans
     };
+    debugger
     console.log(JSON.stringify(data))
     fetch(postURL, {
       method: 'PUT',
@@ -113,7 +116,7 @@ function handleSavePutRequest(logIn){
         throw new Error (response.statusText);
     })
     .then(response => {
-        console.log('Success:', JSON.stringify(response))
+        console.log(`Success: ${response.message}`)
         alert("Your Hurdles have been saved.")
     })
     .catch(error => console.error('Error:', error))
