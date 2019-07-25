@@ -193,7 +193,7 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
   }
   if (!(req.params.id === req.body._id)) {
     res.status(400).send({
-      error: 'Request path id and request body id values must match'
+      error: "Request path id and request body id values must match."
     })
     return
   }
@@ -211,34 +211,34 @@ app.put('/user-loans/:id', jsonParser, (req, res) => {
            .toArray(function(err, data) {
               if(data.length > 0){
                 if (data[0]._id.toString() !== req.params.id){
-                  reject(err)
-                  res.status(409).send({ error: `Username ${req.body.username} does not match database ID.` })
-                  return false
+                  reject(`Username ${req.body.username} does not match database ID.`)
                 }
                 else {
                   resolve (
                     collection.updateOne({"username": req.body.username}, { $set: { "loans" : req.body.loans } }),
-                    res.status(204).send("Updated!")
-                  );
+                  )
+                  return res.json({message: "Current hurdles have been saved!"})
                 }
               }
+              if (data.length === 0){
+                reject(`Username in request wasn't found in database.`)
+              }
               else {
-                reject(err)
-                res.status(404).send({ error: `Username ${req.body.username} not found in database.` })
-                return false
-              }              
-            });
-          }).catch (e => {
-            return false
-         })            
-        }
-        await myPromise() 
-        client.close();
-      });
-      } catch (e) {
-        next(e)
-      }
-    });
+                reject("Something unexpected went wrong.")
+              }
+          });
+        }).catch(e => {
+          return res.json({message: e})
+      })            
+    }
+    await myPromise() 
+    client.close();
+  });
+  } catch (e) {
+    res.json({ message: `POST connection failed: ${e}`}).status(400)
+    next(e)
+  }
+});
 
 app.use('*', (req, res) => {
   return res.status(500).json({ message: 'Not Found' });

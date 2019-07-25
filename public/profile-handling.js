@@ -15,7 +15,7 @@ function clickSave(loggedIn){
         alert("You must be logged in to save hurdles.")
         return
     }
-    //check userID, then successful PUT request, updating database loans of that username
+    handleSavePutRequest()
 } 
 
 function handleProfileClick(){
@@ -27,10 +27,11 @@ function handleProfileClick(){
     }
 }
 
+
 function handleCreateProfile(logIn){
     var userInput = document.getElementById("username-input").value
     var postURL = herokuAPIEndpoint + `user-loans/`
-console.log(postURL)
+    console.log(postURL)
     var data = {
         username: userInput,
         loans: loans
@@ -84,6 +85,38 @@ function handleLogIn(logIn){
         alert(`Now logged in as ${currentUser.username}.`)            
     })
     .catch (error => alert (`${error}`));
+}
+
+
+
+function handleSavePutRequest(logIn){
+    var myId = $(`nav`).attr('id')
+    console.log(myId)
+    var postURL = herokuAPIEndpoint + `user-loans/` + myId
+    console.log(postURL)
+    var data = {
+        username: currentUser.username,
+        loans: loans
+    };
+    console.log(JSON.stringify(data))
+    fetch(postURL, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error (response.statusText);
+    })
+    .then(response => {
+        console.log('Success:', JSON.stringify(response))
+        alert("Your Hurdles have been saved.")
+    })
+    .catch(error => console.error('Error:', error))
 }
 
 function logOut(){

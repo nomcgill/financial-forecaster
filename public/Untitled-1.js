@@ -1,48 +1,32 @@
-function handleCreateProfile(userInput){
-    var postURL = herokuAPIEndpoint + `user-loans/` + userInput
 
+
+function handleSavePutRequest(logIn){
+    var myId = $(this).attr('id')
+    var postURL = herokuAPIEndpoint + `user-loans/` + myId
+    console.log(postURL)
     var data = {
         username: currentUser.username,
-        loans: currentUser.loans[0]
+        loans: loans
     };
-    
+    console.log(JSON.stringify(data))
     fetch(postURL, {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
       headers:{
         'Content-Type': 'application/json'
       }
     })
-    .then(
-        res => res.json()
-        )
-    .then(response => 
-        console.log('Success:', JSON.stringify(response)),
-        handleLogIn(userInput)
-    )
-    .catch(error => console.error('Error:', error));
-}
-
-
     .then(response => {
-        if (response.status === 404) {
-            throw new Error (response.status + `: Username not found.`);
-        }
-        if (response.status === 200) {
+        if (response.ok) {
             return response.json();
         }
+        throw new Error (response.statusText);
     })
-    .then(data => {
-        currentUser = data
-        loans = currentUser.loans[0]
-        loggedIn = true
-        return currentUser
+    .then(response => {
+        console.log('Success:', JSON.stringify(response))
+        alert("Your Hurdles have been saved.")
     })
-    .then(data => {
-        $("#log-in").off()
-        console.log(data)
-        resetBox()
-        alert(`Now logged in as ${currentUser.username}.`)            
+    .then(response => {
     })
-    .catch (error => alert (`${error}`));
+    .catch(error => console.error('Error:', error))
 }
