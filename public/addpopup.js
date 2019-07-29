@@ -3,7 +3,7 @@ function onAddHurdleClick(){
   document.getElementById("popup-form").reset();
   $(`#longevity`).replaceWith(`<div id="longevity"></div>`)
   if (loans.length === 11){
-    alert("Financial Forecaster is limited to 12 hurdles. This is one the last available!")
+    swal("Financial Forecaster is limited to 12 hurdles. This is one the last available!")
   }  
   $("#list-builder").fadeIn("fast", () => {
       $("#popup-box").fadeIn("fast", () => {});
@@ -32,7 +32,7 @@ function onAddHurdleClick(){
         loans.push(newCard)
         $("#list-builder, #popup-box").hide();
       }
-      else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
+      else {swal("","You're stuck in debt hell with those numbers! That payment is too small to add to your Financial Forecast.","error")}
       $("#grid").empty()
       gatherInfo(loans)
     }

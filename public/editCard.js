@@ -15,19 +15,20 @@ function existingCardClick(num){
     var cardBal = document.getElementById("new-card-balance")
     var deleteCard = document.getElementById("delete-card")
     $(`#new-card-save`).replaceWith(`<button type="submit" id="new-card-save" name="Add-Hurdle">Save Changes</button>`)
-    $(`#add-title`).replaceWith(`<h2 id="add-title">${whichCard.name}</h2>`)
 
     if (loans[0].name === "Sample Hurdle"){
         cardName.setAttribute("value", ``)
         cardPay.setAttribute("value", ``)
         cardAPR.setAttribute("value", ``)
         cardBal.setAttribute("value", ``)
+        $(`#add-title`).replaceWith(`<h2 id="add-title">Create a Hurdle</h2>`)
     }
     else {
         cardName.setAttribute("value", `${whichCard.name}`)
         cardPay.setAttribute("value", `${whichCard.payment}`)
         cardAPR.setAttribute("value", `${whichCard.rate}`)
         cardBal.setAttribute("value", `${whichCard.balance}`)
+        $(`#add-title`).replaceWith(`<h2 id="add-title">${whichCard.name}</h2>`)
     }
 
     $("#list-builder").fadeIn("fast", () => {
@@ -48,7 +49,7 @@ function existingCardClick(num){
             if (calculateSimpleInt(editedCard) !== false){
                 loans.splice(placement, 1, editedCard)
             }
-            else {alert("Stuck in Debt Hell! Payment too small to add to Financial Forecast")}
+            else {swal("","You're stuck in debt hell forever with those numbers. That payment is to small for that interest rate. ","info")}
             clearPopup(deleteCard)
         }
     })
