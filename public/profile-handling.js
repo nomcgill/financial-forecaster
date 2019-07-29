@@ -12,7 +12,7 @@ function watchForSave(){
 
 function clickSave(loggedIn){
     if (loggedIn === false){
-        alert("You must be logged in to save hurdles.")
+        swal("You must be logged in to save hurdles.")
         return
     }
     handleSavePutRequest()
@@ -77,9 +77,9 @@ function handleLogIn(logIn){
     .then(data => {
         $("#log-in").off()
         resetBox(logIn)
-        alert(`Now logged in as ${currentUser.username}.`)            
+        swal(`Now logged in as ${currentUser.username}.`)            
     })
-    .catch (error => alert (`${error}`));
+    .catch (error => swal (`${error}`));
 }
 
 function handleSavePutRequest(logIn){
@@ -105,20 +105,20 @@ function handleSavePutRequest(logIn){
         throw new Error (response.statusText);
     })
     .then(response => {
-        alert("Your Hurdles have been saved.")
+        swal("Your Hurdles have been saved.")
     })
     .catch(error => console.error('Error:', error))
 }
 
 function logOut(){
     loggedIn = false
-    alert("You've been logged out.")
+    swal("You've been logged out.")
     window.location.reload(true)
 }
 
 function createProfilePopup(){
     if (loans.length > 0){
-        alert("WARNING: Present loans will be lost upon Log In.")
+        swal("WARNING: Present loans will be lost upon Log In.")
     }
     $("#list-builder").fadeIn("fast", () => {
         $("#popup-box").fadeIn("fast", () => {});
@@ -209,3 +209,5 @@ function reassessNavBar(){
     $("#save-profile").off()
     watchForSave()
 }
+
+// function navMessageListen
