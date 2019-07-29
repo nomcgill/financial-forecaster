@@ -8,7 +8,6 @@ function replyClick(){
 function existingCardClick(num){
     document.getElementById("popup-form").reset();
     placement = num -1
-    // placement = replyClick()-1
     var whichCard = loans[placement]
     var cardName = document.getElementById("new-card-name")
     var cardPay = document.getElementById("new-card-pay")
@@ -18,10 +17,18 @@ function existingCardClick(num){
     $(`#new-card-save`).replaceWith(`<button type="submit" id="new-card-save" name="Add-Hurdle">Save Changes</button>`)
     $(`#add-title`).replaceWith(`<h2 id="add-title">${whichCard.name}</h2>`)
 
-    cardName.setAttribute("value", `${whichCard.name}`)
-    cardPay.setAttribute("value", `${whichCard.payment}`)
-    cardAPR.setAttribute("value", `${whichCard.rate}`)
-    cardBal.setAttribute("value", `${whichCard.balance}`)
+    if (loans[0].name === "Sample Hurdle"){
+        cardName.setAttribute("value", ``)
+        cardPay.setAttribute("value", ``)
+        cardAPR.setAttribute("value", ``)
+        cardBal.setAttribute("value", ``)
+    }
+    else {
+        cardName.setAttribute("value", `${whichCard.name}`)
+        cardPay.setAttribute("value", `${whichCard.payment}`)
+        cardAPR.setAttribute("value", `${whichCard.rate}`)
+        cardBal.setAttribute("value", `${whichCard.balance}`)
+    }
 
     $("#list-builder").fadeIn("fast", () => {
         $("#popup-box").fadeIn("fast", () => {});
@@ -91,9 +98,3 @@ function watchForEdits(){
         existingCardClick(lastChar)
     });
 }
-
-// function watchForEdits(){
-//     $('.editable').click(function(){
-//         existingCardClick(loans)
-//     });
-// }

@@ -34,7 +34,19 @@ button {
 }
 
 header h3 {
-  margin-bottom: 0;
+  margin-bottom: 4px;
+}
+
+.swal-text {
+  padding: 15px;
+}
+
+.swal-title:first-child {
+  margin-bottom: 0px;
+}
+
+.swal-footer {
+  margin-top: 0px;
 }
 
 nav {

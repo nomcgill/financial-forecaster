@@ -1,5 +1,4 @@
 "use strict";
-
 // import { link } from "fs";
 var loggedIn = false
 
@@ -179,11 +178,13 @@ function postTotalPaid(totalPaid){
 }
   
 $(function() {
+    swal('The Financial Forecaster', 
+    "The Financial Forecaster is a tool used to organize and prioritize a monthly budget. Each source of debt—credit cards, loans, etc.—should be added as a hurdle, and your totals will be calculated automatically. If you plan to return, don't forget to make a profile! Click a card to get started.")
     gatherInfo(loans)
     $('input.currency').currencyInput();
     $('input.percent').percentInput();
     $("#area1").one("click", function () {
-        $(".description").hide()
+        document.getElementById("description-box").style.display = "none"
     })
     watchForAdd()
     watchForEdits()
