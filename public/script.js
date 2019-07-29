@@ -6,7 +6,14 @@ var loggedIn = false
 let currentUser = {
     _id: false,
     username: false,
-    loans: []
+    loans: [
+        {
+            "name": "Sample Hurdle",
+            "balance": 15000,
+            "rate": 3.25,
+            "payment": 290    
+        }
+    ]
 }
 
 var loans = currentUser.loans
@@ -175,6 +182,9 @@ $(function() {
     gatherInfo(loans)
     $('input.currency').currencyInput();
     $('input.percent').percentInput();
+    $("#area1").one("click", function () {
+        $(".description").hide()
+    })
     watchForAdd()
     watchForEdits()
     watchForSave()
