@@ -4,13 +4,13 @@ function StorageException(message) {
   this.name = "StorageException";
 }
 
-var userSchema = mongoose.Schema({
-  username: {
-    type: 'string',
-    unique: true
-  },
-  loans: 'array'
-})
+// var userSchema = mongoose.Schema({
+//   username: {
+//     type: 'string',
+//     unique: true
+//   },
+//   loans: 'array'
+// })
 
 const userloans = {
   create: function(name, loans) {
