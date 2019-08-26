@@ -16,7 +16,7 @@ function existingCardClick(num){
     var deleteCard = document.getElementById("delete-card")
     $(`#new-card-save`).replaceWith(`<button type="submit" id="new-card-save" name="Add-Hurdle">Save Changes</button>`)
 
-    if (loans[0].name === "Sample Hurdle"){
+    if (loans[0].name === "Sample Hurdle" && loans.length === 1){
         cardName.setAttribute("value", ``)
         cardPay.setAttribute("value", ``)
         cardAPR.setAttribute("value", ``)

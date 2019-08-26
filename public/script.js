@@ -140,6 +140,12 @@ function addEmUp(loans){
         postStartingBalance(startingBalance)
         postTotalPaid(totalPaid)
     }
+    else {
+        emptyTotals()
+        postMonthlyCost(0)
+        postStartingBalance(0)
+        postTotalPaid(0)
+    }
 }
 
 function emptyTotals(){
